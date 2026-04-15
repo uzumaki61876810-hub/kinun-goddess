@@ -1,1 +1,850 @@
-# kinun-goddess
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金運女神診断 ─ あなたの副業・開運タイプ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&family=Noto+Serif+JP:wght@300;400;500;700&family=Shippori+Mincho+B1:wght@400;500;700;800&display=swap');
+:root{
+  --washi:#faf6ee;--ink:#1a1408;
+  --gold:#b8860b;--gold2:#d4a017;--gold3:#f0c040;--gold-pale:#fdf3d0;
+  --red:#8b2020;--border:rgba(184,134,11,0.25);--border2:rgba(184,134,11,0.5);
+  --shadow:0 4px 24px rgba(184,134,11,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Serif JP',serif;background:var(--washi);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 20px 80px;}
+.header{text-align:center;padding:60px 0 48px;}
+.header::before,.header::after{content:'';display:block;width:80px;height:1px;background:var(--gold);margin:0 auto;}
+.header::before{margin-bottom:24px;}.header::after{margin-top:20px;}
+.header-label{font-family:'Zen Antique Soft',serif;font-size:11px;letter-spacing:0.5em;color:var(--gold);margin-bottom:16px;}
+.header-title{font-family:'Shippori Mincho B1',serif;font-size:clamp(26px,6vw,42px);font-weight:800;color:var(--ink);letter-spacing:0.1em;line-height:1.3;}
+.header-title span{color:var(--gold);}
+.header-sub{font-size:13px;color:#6b5a3a;margin-top:10px;letter-spacing:0.15em;line-height:1.8;}
+.card{background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);padding:32px 28px;margin-bottom:20px;box-shadow:var(--shadow);position:relative;}
+.card::before{content:'';position:absolute;top:6px;left:6px;right:6px;bottom:6px;border:1px solid var(--border);pointer-events:none;}
+@media(max-width:480px){.card{padding:24px 18px;}}
+.card-title{font-family:'Shippori Mincho B1',serif;font-size:17px;font-weight:700;color:var(--gold);letter-spacing:0.2em;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.step-badge{font-size:10px;background:var(--gold);color:#fff;padding:2px 10px;letter-spacing:0.2em;}
+.field{margin-bottom:20px;}
+.field label{display:block;font-size:12px;letter-spacing:0.2em;color:#7a6a4a;margin-bottom:7px;}
+.field input,.field select{width:100%;background:var(--washi);border:1px solid var(--border2);color:var(--ink);padding:11px 14px;font-family:'Noto Serif JP',serif;font-size:14px;outline:none;-webkit-appearance:none;transition:border-color 0.2s;}
+.field input:focus,.field select:focus{border-color:var(--gold);background:var(--gold-pale);}
+.field select option{background:#fff;}
+.field-note{font-size:11px;color:#9a8a6a;margin-top:5px;line-height:1.7;}
+.emo-group{display:flex;flex-direction:column;gap:8px;}
+.emo-btn{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border:1px solid var(--border2);background:var(--washi);cursor:pointer;transition:all 0.2s;text-align:left;}
+.emo-btn:hover{background:var(--gold-pale);border-color:var(--gold);}
+.emo-btn.selected{background:var(--gold-pale);border-color:var(--gold);border-left:3px solid var(--gold);}
+.emo-btn input{display:none;}
+.emo-icon{font-size:18px;margin-top:1px;flex-shrink:0;}
+.emo-text{font-size:13px;line-height:1.7;color:var(--ink);}
+.emo-text strong{font-weight:700;display:block;margin-bottom:2px;}
+.btn{display:block;width:100%;padding:15px;font-family:'Shippori Mincho B1',serif;font-size:15px;font-weight:700;letter-spacing:0.3em;cursor:pointer;border:none;text-align:center;margin-top:24px;transition:all 0.3s;}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;box-shadow:0 4px 20px rgba(184,134,11,0.3);}
+.btn-gold:hover{background:linear-gradient(135deg,var(--gold2),var(--gold3));transform:translateY(-1px);}
+.btn-sub{background:transparent;border:1px solid var(--gold);color:var(--gold);font-size:12px;padding:10px;display:inline-block;width:auto;margin-top:0;letter-spacing:0.2em;}
+.btn-sub:hover{background:var(--gold-pale);}
+.btn-stripe{background:linear-gradient(135deg,#635bff,#7c76ff);color:#fff;font-size:13px;letter-spacing:0.15em;}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+.err{font-size:12px;color:var(--red);margin-top:8px;display:none;}
+.err.on{display:block;}
+/* 四柱プレビュー */
+.pillars-preview{display:none;margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+.pillars-preview.show{display:block;}
+.pillars-label{font-size:11px;letter-spacing:0.25em;color:var(--gold);margin-bottom:10px;}
+.pillars-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.pillar-box{border:1px solid var(--border);padding:10px 6px;text-align:center;background:var(--washi);}
+.pillar-label{font-size:9px;color:var(--gold);letter-spacing:0.15em;margin-bottom:4px;}
+.pillar-kan{font-family:'Zen Antique Soft',serif;font-size:22px;color:var(--ink);}
+.pillar-shi{font-family:'Zen Antique Soft',serif;font-size:17px;color:#6b5a3a;margin-top:2px;}
+.pillar-el{font-size:10px;margin-top:4px;font-weight:500;}
+/* 結果 */
+.goddess-banner{text-align:center;padding:40px 20px 28px;background:linear-gradient(135deg,var(--gold-pale),#fff8e8);border:1px solid var(--border2);border-top:3px solid var(--gold);margin-bottom:16px;position:relative;}
+.goddess-banner::before{content:'';position:absolute;top:6px;left:6px;right:6px;bottom:6px;border:1px solid var(--border);pointer-events:none;}
+.gb-label{font-size:10px;letter-spacing:0.4em;color:var(--gold);margin-bottom:12px;}
+.gb-type{font-family:'Shippori Mincho B1',serif;font-size:clamp(13px,3vw,15px);color:#7a6a4a;letter-spacing:0.2em;margin-bottom:8px;}
+.gb-name{font-family:'Zen Antique Soft',serif;font-size:clamp(32px,8vw,52px);color:var(--gold);text-shadow:0 2px 12px rgba(184,134,11,0.2);letter-spacing:0.1em;}
+.gb-theme{font-size:14px;color:#5a4a2a;margin-top:8px;letter-spacing:0.2em;}
+.gb-copy{font-size:14px;line-height:2;color:var(--ink);margin-top:16px;font-weight:300;}
+.result-section{background:#fff;border:1px solid var(--border);border-left:3px solid var(--gold);padding:20px;margin-bottom:12px;}
+.rs-label{font-size:10px;letter-spacing:0.3em;color:var(--gold);margin-bottom:10px;}
+.rs-title{font-family:'Shippori Mincho B1',serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:10px;}
+.rs-body{font-size:14px;line-height:2.1;color:#3a2a0a;}
+.shicyu-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0;}
+.sc-box{border:1px solid var(--border);padding:10px 6px;text-align:center;background:var(--washi);}
+.sc-label{font-size:9px;color:var(--gold);letter-spacing:0.15em;margin-bottom:4px;}
+.sc-kan{font-family:'Zen Antique Soft',serif;font-size:20px;color:var(--ink);}
+.sc-shi{font-family:'Zen Antique Soft',serif;font-size:16px;color:#6b5a3a;margin-top:2px;}
+.sc-el{font-size:9px;margin-top:3px;font-weight:500;}
+.fukugyou-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+@media(max-width:420px){.fukugyou-grid{grid-template-columns:1fr;}}
+.fg-box{border:1px solid var(--border);padding:14px 10px;text-align:center;background:var(--washi);}
+.fg-rank{font-size:10px;color:var(--gold);letter-spacing:0.2em;margin-bottom:6px;}
+.fg-type{font-family:'Shippori Mincho B1',serif;font-size:14px;font-weight:700;color:var(--ink);}
+.fg-desc{font-size:11px;color:#7a6a4a;margin-top:4px;line-height:1.6;}
+.cta-box{background:linear-gradient(135deg,#1a1408,#2d2010);color:#fff;padding:32px 24px;border:1px solid var(--gold);margin:20px 0;text-align:center;position:relative;overflow:hidden;}
+.cta-box::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at center,rgba(212,160,23,0.08),transparent 60%);pointer-events:none;}
+.cta-label{font-size:10px;letter-spacing:0.4em;color:var(--gold3);margin-bottom:12px;}
+.cta-title{font-family:'Shippori Mincho B1',serif;font-size:clamp(18px,4vw,24px);font-weight:800;color:#fff;letter-spacing:0.1em;margin-bottom:10px;}
+.cta-price{font-family:'Zen Antique Soft',serif;font-size:36px;color:var(--gold3);margin:12px 0;}
+.cta-price span{font-size:16px;color:#c8b070;}
+.cta-list{text-align:left;margin:16px 0 20px;list-style:none;}
+.cta-list li{font-size:13px;color:#e8d8a0;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:flex-start;gap:8px;line-height:1.7;}
+.cta-list li::before{content:'✦';color:var(--gold3);flex-shrink:0;margin-top:3px;}
+.screen{animation:fadeIn 0.5s ease both;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+footer{text-align:center;padding:40px 0 20px;font-size:11px;color:#9a8a6a;letter-spacing:0.2em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="header">
+  <div class="header-label">KINUN GODDESS DIAGNOSIS</div>
+  <h1 class="header-title">金運<span>女神</span>診断</h1>
+  <p class="header-sub">日本神話 × 四柱推命で読み解く<br>あなたの副業・開運タイプ</p>
+</header>
+
+<!-- TOP -->
+<div id="s-top" class="screen">
+  <div class="card">
+    <p style="font-size:14px;line-height:2.1;color:#4a3a1a;text-align:center;">
+      生年月日・出生時刻と3つの質問から<br>
+      四柱推命で命式を算出し、<br>
+      あなたの金運タイプ・副業適性を診断します。
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border);margin:24px 0 4px;">
+      <div style="padding:14px 8px;text-align:center;border-right:1px solid var(--border);">
+        <div style="font-size:10px;letter-spacing:0.3em;color:var(--gold);margin-bottom:6px;">一</div>
+        <div style="font-size:12px;color:#5a4a2a;">生年月日<br>時刻・場所</div>
+      </div>
+      <div style="padding:14px 8px;text-align:center;border-right:1px solid var(--border);">
+        <div style="font-size:10px;letter-spacing:0.3em;color:var(--gold);margin-bottom:6px;">二</div>
+        <div style="font-size:12px;color:#5a4a2a;">3つの<br>質問</div>
+      </div>
+      <div style="padding:14px 8px;text-align:center;">
+        <div style="font-size:10px;letter-spacing:0.3em;color:var(--gold);margin-bottom:6px;">三</div>
+        <div style="font-size:12px;color:#5a4a2a;">金運女神<br>診断結果</div>
+      </div>
+    </div>
+    <button class="btn btn-gold" onclick="go('birth')">✦ 無料診断をはじめる</button>
+  </div>
+</div>
+
+<!-- BIRTH -->
+<div id="s-birth" class="screen" style="display:none;">
+  <div class="card">
+    <div class="card-title"><span class="step-badge">一</span>生年月日・出生時刻</div>
+    <div class="field">
+      <label>生年月日</label>
+      <input type="date" id="f-date" min="1930-01-01" max="2005-12-31" onchange="onBirthChange()">
+    </div>
+    <div class="field">
+      <label>出生時刻</label>
+      <input type="time" id="f-time" value="12:00" onchange="onBirthChange()">
+      <p class="field-note">時柱の算出に使用。不明な場合は12:00のまま（有料PDF精度に影響します）。</p>
+    </div>
+    <div class="field">
+      <label>出生地（都道府県）</label>
+      <select id="f-pref" onchange="onBirthChange()">
+        <optgroup label="北海道・東北">
+          <option value="141.35">北海道</option>
+          <option value="141.15">青森県</option>
+          <option value="141.15">岩手県</option>
+          <option value="140.87">宮城県</option>
+          <option value="140.10">秋田県</option>
+          <option value="140.36">山形県</option>
+          <option value="140.47">福島県</option>
+        </optgroup>
+        <optgroup label="関東">
+          <option value="140.44">茨城県</option>
+          <option value="139.88">栃木県</option>
+          <option value="139.06">群馬県</option>
+          <option value="139.65">埼玉県</option>
+          <option value="140.12">千葉県</option>
+          <option value="139.69" selected>東京都</option>
+          <option value="139.64">神奈川県</option>
+        </optgroup>
+        <optgroup label="中部">
+          <option value="138.25">新潟県</option>
+          <option value="137.02">富山県</option>
+          <option value="136.63">石川県</option>
+          <option value="136.22">福井県</option>
+          <option value="138.57">山梨県</option>
+          <option value="138.18">長野県</option>
+          <option value="136.72">岐阜県</option>
+          <option value="138.38">静岡県</option>
+          <option value="136.91">愛知県</option>
+        </optgroup>
+        <optgroup label="近畿">
+          <option value="136.51">三重県</option>
+          <option value="135.86">滋賀県</option>
+          <option value="135.77">京都府</option>
+          <option value="135.52">大阪府</option>
+          <option value="135.18">兵庫県</option>
+          <option value="135.83">奈良県</option>
+          <option value="135.17">和歌山県</option>
+        </optgroup>
+        <optgroup label="中国・四国">
+          <option value="134.24">鳥取県</option>
+          <option value="133.05">島根県</option>
+          <option value="133.93">岡山県</option>
+          <option value="132.46">広島県</option>
+          <option value="131.47">山口県</option>
+          <option value="134.56">徳島県</option>
+          <option value="134.05">香川県</option>
+          <option value="132.77">愛媛県</option>
+          <option value="133.55">高知県</option>
+        </optgroup>
+        <optgroup label="九州・沖縄">
+          <option value="130.42">福岡県</option>
+          <option value="130.30">佐賀県</option>
+          <option value="129.87">長崎県</option>
+          <option value="130.74">熊本県</option>
+          <option value="131.61">大分県</option>
+          <option value="131.42">宮崎県</option>
+          <option value="130.56">鹿児島県</option>
+          <option value="127.68">沖縄県</option>
+        </optgroup>
+      </select>
+      <p class="field-note">地方時補正のために使用します。命式の精度に影響します。</p>
+    </div>
+
+    <!-- 四柱プレビュー -->
+    <div class="pillars-preview" id="pillars-preview">
+      <div class="pillars-label">— あなたの四柱 —</div>
+      <div class="pillars-row">
+        <div class="pillar-box">
+          <div class="pillar-label">年柱</div>
+          <div class="pillar-kan" id="pv-y-kan"></div>
+          <div class="pillar-shi" id="pv-y-shi"></div>
+          <div class="pillar-el" id="pv-y-el"></div>
+        </div>
+        <div class="pillar-box">
+          <div class="pillar-label">月柱</div>
+          <div class="pillar-kan" id="pv-m-kan"></div>
+          <div class="pillar-shi" id="pv-m-shi"></div>
+          <div class="pillar-el" id="pv-m-el"></div>
+        </div>
+        <div class="pillar-box">
+          <div class="pillar-label">日柱</div>
+          <div class="pillar-kan" id="pv-d-kan"></div>
+          <div class="pillar-shi" id="pv-d-shi"></div>
+          <div class="pillar-el" id="pv-d-el"></div>
+        </div>
+        <div class="pillar-box">
+          <div class="pillar-label">時柱</div>
+          <div class="pillar-kan" id="pv-h-kan"></div>
+          <div class="pillar-shi" id="pv-h-shi"></div>
+          <div class="pillar-el" id="pv-h-el"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="err" id="err-birth">生年月日を入力してください</div>
+    <button class="btn btn-gold" onclick="goBirth()">次へ：3つの質問 →</button>
+  </div>
+</div>
+
+<!-- QUESTIONS -->
+<div id="s-questions" class="screen" style="display:none;">
+  <div class="card">
+    <div class="card-title"><span class="step-badge">二</span>現在の状態を教えてください</div>
+    <p style="font-size:13px;color:#7a6a4a;margin-bottom:8px;line-height:1.8;">あなたの金運女神はすでに命式から決まっています。<br>この3問は「今のあなたの状態」をより深く読み解くために使います。</p>
+    <div style="font-size:12px;color:#9a8a6a;margin-bottom:24px;padding:10px 14px;border-left:2px solid var(--border2);" id="q-goddess-preview"></div>
+
+    <div style="margin-bottom:28px;">
+      <div style="font-size:12px;letter-spacing:0.15em;color:var(--gold);margin-bottom:6px;">Q1</div>
+      <div style="font-size:14px;line-height:1.9;margin-bottom:12px;font-weight:500;">今のお金との関係で一番近いものは？</div>
+      <div class="emo-group" id="q1">
+        <label class="emo-btn" onclick="selectEmo(this,'q1',0)"><input type="radio" name="q1"><span class="emo-icon">😔</span><span class="emo-text"><strong>頑張っているのに収入が増えない</strong>努力と結果が釣り合っていない感覚がある</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q1',1)"><input type="radio" name="q1"><span class="emo-icon">🌀</span><span class="emo-text"><strong>チャンスは感じるが動き出せない</strong>もう少しで変われる気がするがきっかけがない</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q1',2)"><input type="radio" name="q1"><span class="emo-icon">💔</span><span class="emo-text"><strong>人のために動きすぎて自分が枯れている</strong>与え続けているが自分に返ってきていない</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q1',3)"><input type="radio" name="q1"><span class="emo-icon">🔄</span><span class="emo-text"><strong>一度リセットして新しい流れを作りたい</strong>今の延長では変わらない。根本から変えたい</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q1',4)"><input type="radio" name="q1"><span class="emo-icon">🚿</span><span class="emo-text"><strong>お金の流れが詰まっている感じがする</strong>稼いでも気づけば減っている。漏れている感覚</span></label>
+      </div>
+    </div>
+
+    <div style="margin-bottom:28px;">
+      <div style="font-size:12px;letter-spacing:0.15em;color:var(--gold);margin-bottom:6px;">Q2</div>
+      <div style="font-size:14px;line-height:1.9;margin-bottom:12px;font-weight:500;">副業を始めるとしたら、一番の不安は？</div>
+      <div class="emo-group" id="q2">
+        <label class="emo-btn" onclick="selectEmo(this,'q2',0)"><input type="radio" name="q2"><span class="emo-icon">🪨</span><span class="emo-text"><strong>続けられるか自信がない</strong>始めても途中でやめてしまう気がする</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q2',1)"><input type="radio" name="q2"><span class="emo-icon">🗺️</span><span class="emo-text"><strong>何から始めればいいかわからない</strong>情報が多すぎて最初の一歩が踏み出せない</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q2',2)"><input type="radio" name="q2"><span class="emo-icon">👁️</span><span class="emo-text"><strong>人に知られるのが怖い</strong>職場や周囲にバレるのが不安</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q2',3)"><input type="radio" name="q2"><span class="emo-icon">💸</span><span class="emo-text"><strong>失敗して損をするのが怖い</strong>時間もお金も無駄になるリスクが気になる</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q2',4)"><input type="radio" name="q2"><span class="emo-icon">⏰</span><span class="emo-text"><strong>本業との両立ができるか不安</strong>時間も体力も余裕がない気がする</span></label>
+      </div>
+    </div>
+
+    <div style="margin-bottom:12px;">
+      <div style="font-size:12px;letter-spacing:0.15em;color:var(--gold);margin-bottom:6px;">Q3</div>
+      <div style="font-size:14px;line-height:1.9;margin-bottom:12px;font-weight:500;">今の自分に一番近いのは？</div>
+      <div class="emo-group" id="q3">
+        <label class="emo-btn" onclick="selectEmo(this,'q3',0)"><input type="radio" name="q3"><span class="emo-icon">🌾</span><span class="emo-text"><strong>地道にやれば結果が出ると信じている</strong>焦りはあるが積み上げる力は自分にある</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q3',1)"><input type="radio" name="q3"><span class="emo-icon">🌟</span><span class="emo-text"><strong>背中を押してくれる人・言葉が欲しい</strong>一人では動けないがきっかけがあれば動ける</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q3',2)"><input type="radio" name="q3"><span class="emo-icon">🌱</span><span class="emo-text"><strong>まず小さく試してみたい</strong>大きく賭けるより小さな一歩から始めたい</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q3',3)"><input type="radio" name="q3"><span class="emo-icon">🔥</span><span class="emo-text"><strong>大きく変わる覚悟はある</strong>リスクがあっても本気で変えたい気持ちがある</span></label>
+        <label class="emo-btn" onclick="selectEmo(this,'q3',4)"><input type="radio" name="q3"><span class="emo-icon">✨</span><span class="emo-text"><strong>整理してからスッキリ動き出したい</strong>まず今の状況を整えてから始めたい</span></label>
+      </div>
+    </div>
+
+    <div class="err" id="err-q">3つの質問すべてに回答してください</div>
+    <button class="btn btn-gold" onclick="goResult()">✦ 金運女神を診断する</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="s-result" class="screen" style="display:none;">
+  <div id="result-content">
+  <div class="goddess-banner">
+    <div class="gb-label">あなたの金運女神</div>
+    <div class="gb-type" id="r-type"></div>
+    <div class="gb-name" id="r-name"></div>
+    <div class="gb-theme" id="r-theme"></div>
+    <div class="gb-copy" id="r-copy"></div>
+  </div>
+  <div class="result-section">
+    <div class="rs-label">あなたの四柱推命 命式</div>
+    <div class="shicyu-row" id="r-shicyu"></div>
+  </div>
+  <div class="result-section" style="border-left-color:var(--red);">
+    <div class="rs-label" style="color:var(--red);">今のあなたへ ─ 現在状態からのアドバイス</div>
+    <div class="rs-title" id="r-state-title"></div>
+    <div class="rs-body" id="r-state-advice"></div>
+    <div class="rs-body" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);" id="r-fuku-advice"></div>
+  </div>
+
+  <div class="result-section">
+    <div class="rs-label">年柱から読む ─ 生まれながらの才能・武器</div>
+    <div class="rs-title" id="r-talent-title"></div>
+    <div class="rs-body" id="r-talent"></div>
+  </div>
+  <div class="result-section">
+    <div class="rs-label">月柱から読む ─ 目指すべき成功の姿</div>
+    <div class="rs-title" id="r-goal-title"></div>
+    <div class="rs-body" id="r-goal"></div>
+  </div>
+  <div class="result-section">
+    <div class="rs-label">命式の五行バランス（干合・月支3倍補正済）</div>
+    <div id="r-gogyou-bars" style="margin:8px 0;"></div>
+    <div style="font-size:12px;color:#9a8a6a;margin-top:8px;line-height:1.8;" id="r-gogyou-comment"></div>
+  </div>
+
+  <div class="result-section">
+    <div class="rs-label">あなたの副業適性 TOP3</div>
+    <div class="fukugyou-grid" id="r-fukugyou"></div>
+    <p style="font-size:11px;color:#9a8a6a;margin-top:10px;">※ 詳細な適性診断・ロードマップは有料PDFに含まれます</p>
+  </div>
+  <div class="cta-box">
+    <div class="cta-label">PREMIUM PDF REPORT</div>
+    <div class="cta-title">詳細開運レポートで<br>副業の全ロードマップを手に入れる</div>
+    <div class="cta-price">¥1,480<span>（税込）</span></div>
+    <ul class="cta-list">
+      <li>時柱から読む「いつ動くべきか」─ 向こう1〜2年の開運タイミング</li>
+      <li>四柱推命×風水 パーソナル開運アクション ─ 方角・色・習慣</li>
+      <li>副業ロードマップ（3ステップ）─ 今月・3ヶ月後・1年後</li>
+      <li>女神からの手紙 ─ 今のあなただけへのメッセージ</li>
+    </ul>
+    <button class="btn btn-stripe" onclick="goStripe()">✦ PDFレポートを購入する（¥1,480）</button>
+    <p style="font-size:11px;color:#a09070;margin-top:10px;">Stripeの安全な決済ページへ移動します</p>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-sub" onclick="retake()">再診断する</button>
+  </div>
+  </div>
+</div>
+
+<footer>— 金運女神診断 · Japanese Goddess Fortune Reading —</footer>
+</div>
+
+<script>
+/* ══════════════════════════════════════
+   四柱推命 精密計算
+   太陽黄経ベース節入り計算
+   検証値：1970/10/6 10:26 東京 → 庚戌・乙酉・己未・己巳 ✅
+══════════════════════════════════════ */
+const KAN  = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const SHI  = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const KAN_EL = ['木','木','火','火','土','土','金','金','水','水'];
+const SHI_EL = ['水','土','木','木','土','火','火','土','金','金','土','水'];
+const EL_COLOR = {木:'#2d5a3d',火:'#8b2020',土:'#7a5a20',金:'#b8860b',水:'#1a3a5c'};
+// 五虎遁年法：年干→寅月の天干インデックス
+const YEAR_KAN_TO_BASE = [2,4,6,8,0,2,4,6,8,0]; // 甲→丙(2),乙→戊(4)...
+// 月支→寅月からのオフセット（月干計算用）
+const SHI_OFFSET = [10,11,0,1,2,3,4,5,6,7,8,9]; // 子→10,丑→11,寅→0...
+// 節の太陽黄経（小寒285°〜大雪255°）
+const SETSU_LON = [285,315,345,15,45,75,105,135,165,195,225,255];
+// 月支テーブル（各月節のインデックス：1月節=丑(1),2月節=寅(2)...）
+const MONTH_SHI_MAP = [1,2,3,4,5,6,7,8,9,10,11,0];
+
+function toJD(y,m,d,h=12){
+  if(m<=2){y--;m+=12;}
+  const A=Math.floor(y/100), B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+h/24+B-1524.5;
+}
+
+function sunLon(jd){
+  const T=(jd-2451545)/36525;
+  const M=(357.5291092+35999.0502909*T)*Math.PI/180;
+  const L0=280.46646+36000.76983*T;
+  const C=(1.9146-0.004817*T)*Math.sin(M)+(0.019993-0.000101*T)*Math.sin(2*M)+0.00029*Math.sin(3*M);
+  return((L0+C)%360+360)%360;
+}
+
+function getSetsuJD(year, mIdx){
+  const tgt=SETSU_LON[mIdx];
+  let jd=toJD(year, mIdx+1, 6);
+  for(let i=0;i<50;i++){
+    let lon=sunLon(jd), diff=tgt-lon;
+    if(diff>180)diff-=360; if(diff<-180)diff+=360;
+    if(Math.abs(diff)<0.00001)break;
+    jd+=diff/360*365.25;
+  }
+  return jd+9/24; // JST
+}
+
+function getYearKan(y){return((y-4)%10+10)%10;}
+function getYearShi(y){return((y-4)%12+12)%12;}
+
+function yearPillar(y,m,d,h){
+  const setsuFeb=getSetsuJD(y,1); // 立春=2月節(index=1)
+  const adjY=toJD(y,m,d,h)<setsuFeb?y-1:y;
+  const k=getYearKan(adjY), s=getYearShi(adjY);
+  return{kan:KAN[k],shi:SHI[s],elK:KAN_EL[k],elS:SHI_EL[s]};
+}
+
+function monthPillar(y,m,d,h){
+  const dateJD=toJD(y,m,d,h);
+  const mIdx=m-1;
+  const adjMIdx=dateJD<getSetsuJD(y,mIdx)?(mIdx-1+12)%12:mIdx;
+  const shiIdx=MONTH_SHI_MAP[adjMIdx];
+  // 年干→月干（五虎遁年法）
+  const yp=yearPillar(y,m,d,h);
+  const yKanIdx=KAN.indexOf(yp.kan);
+  const baseKan=YEAR_KAN_TO_BASE[yKanIdx];
+  const kanIdx=(baseKan+SHI_OFFSET[shiIdx])%10;
+  return{kan:KAN[kanIdx],shi:SHI[shiIdx],elK:KAN_EL[kanIdx],elS:SHI_EL[shiIdx]};
+}
+
+function dayPillar(y,m,d){
+  const jd=toJD(y,m,d);
+  const diff=jd-toJD(1900,1,1);
+  const ki=((0+diff)%10+10)%10;
+  const si=((10+diff)%12+12)%12;
+  return{kan:KAN[ki],shi:SHI[si],elK:KAN_EL[ki],elS:SHI_EL[si]};
+}
+
+function hourPillar(dayKan,localHour){
+  const shiIdx=Math.floor(((localHour+1)%24)/2);
+  const dKanIdx=KAN.indexOf(dayKan);
+  const baseKan=[0,2,4,6,8][dKanIdx%5];
+  const kanIdx=(baseKan+shiIdx)%10;
+  return{kan:KAN[kanIdx],shi:SHI[shiIdx],elK:KAN_EL[kanIdx],elS:SHI_EL[shiIdx]};
+}
+
+function calcPillars(dateStr,timeStr,longitude){
+  const [y,mo,d]=dateStr.split('-').map(Number);
+  const [hh,mm]=timeStr.split(':').map(Number);
+  const diffMin=(longitude-135)*4;
+  let localMin=hh*60+mm+diffMin;
+  if(localMin<0)localMin+=1440;
+  if(localMin>=1440)localMin-=1440;
+  const localHour=localMin/60;
+  const dp=dayPillar(y,mo,d);
+  return{
+    year:yearPillar(y,mo,d,localHour),
+    month:monthPillar(y,mo,d,localHour),
+    day:dp,
+    hour:hourPillar(dp.kan,localHour)
+  };
+}
+
+/* ══════════════════════════════════════
+   日主→女神マッピング
+   甲乙=木=トヨウケヒメ, 丙丁=火=イチキシマヒメ
+   戊己=土=ウケモチ, 庚辛=金=セオリツヒメ, 壬癸=水=オオゲツヒメ
+══════════════════════════════════════ */
+const NISSHU_GODDESS = {
+  甲:2, 乙:2,   // 木→トヨウケヒメ(index=2)
+  丙:1, 丁:1,   // 火→イチキシマヒメ(index=1)
+  戊:0, 己:0,   // 土→ウケモチ(index=0)
+  庚:4, 辛:4,   // 金→セオリツヒメ(index=4)
+  壬:3, 癸:3,   // 水→オオゲツヒメ(index=3)
+};
+
+// 現在状態（Q1）×副業不安（Q2）×自己認識（Q3）→アドバイスメッセージ
+// Q1:0=報われない,1=動けない,2=枯れている,3=リセット,4=詰まっている
+// Q2:0=継続不安,1=方向不明,2=人目が怖い,3=失敗怖い,4=両立不安
+// Q3:0=信じている,1=背中が欲しい,2=小さく試したい,3=覚悟あり,4=整理したい
+const STATE_ADVICE = [
+  // 0: 報われていない
+  '今のあなたは正しい方向に向かっています。ただし「やり方」より「届け方」を変える時期です。',
+  // 1: 動けない
+  'チャンスを感じているなら、その直感は正しい。まず一つだけ、今日できる小さな行動を選んでください。',
+  // 2: 枯れている
+  '与えることが得意なあなたへ。副業は「人のため」より「自分のため」に始めていい。自分が満たされてこそ、本当に与えられます。',
+  // 3: リセット
+  '手放す準備ができているなら、今が動き時です。リセットは後退ではなく、加速のための助走です。',
+  // 4: 詰まっている
+  'まず「出ていくお金」を見直してください。入口より出口を整えることで、流れが自然に変わり始めます。',
+];
+
+/* ══════════════════════════════════════
+   五行バランス計算
+   ・地支五行：各1pt（月支のみ×3）
+   ・天干五行：各1pt（干合判定後）
+   ・干合：隣接天干（年月・月日・日時）を判定
+   ・合化条件：月支五行 or 地支最多五行 が合化五行と一致
+   ・不成立（合去）：両干を0.5ptとして弱める
+══════════════════════════════════════ */
+const KAN_EL_MAP = {甲:'木',乙:'木',丙:'火',丁:'火',戊:'土',己:'土',庚:'金',辛:'金',壬:'水',癸:'水'};
+const SHI_EL_MAP = {子:'水',丑:'土',寅:'木',卯:'木',辰:'土',巳:'火',午:'火',未:'土',申:'金',酉:'金',戌:'土',亥:'水'};
+const KANGO_TABLE = [
+  ['甲','己','土'],['乙','庚','金'],['丙','辛','水'],['丁','壬','木'],['戊','癸','火']
+];
+
+function calcGogyou(pillars){
+  const {year:y,month:m,day:d,hour:h} = pillars;
+  const kans = [y.kan,m.kan,d.kan,h.kan];
+  const shis = [y.shi,m.shi,d.shi,h.shi];
+  const el = {木:0,火:0,土:0,金:0,水:0};
+
+  // 地支カウント（月支=index1は×3）
+  shis.forEach((s,i)=>{ el[SHI_EL_MAP[s]] += (i===1)?3:1; });
+
+  // 干合判定（隣接ペア：年月=0,1 / 月日=1,2 / 日時=2,3）
+  // 合化成立：合化五行として2pt加算（両干はmerged）
+  // 合化不成立（合去）：両干を元の五行0.5ptとして弱める
+  const merged = new Set();
+  const halfKans = new Set(); // 合去された天干（0.5pt扱い）
+
+  [[0,1],[1,2],[2,3]].forEach(([i,j])=>{
+    const a=kans[i],b=kans[j];
+    const go=KANGO_TABLE.find(g=>(g[0]===a&&g[1]===b)||(g[0]===b&&g[1]===a));
+    if(!go) return;
+    const gokaEl=go[2];
+    // 合化条件：月支五行 or 地支最多五行 が合化五行と一致
+    const mShiEl=SHI_EL_MAP[m.shi];
+    const shiOnly={木:0,火:0,土:0,金:0,水:0};
+    shis.forEach((s,si)=>{shiOnly[SHI_EL_MAP[s]]+=(si===1)?3:1;});
+    const maxShiEl=Object.entries(shiOnly).sort((a,b)=>b[1]-a[1])[0][0];
+    if(mShiEl===gokaEl||maxShiEl===gokaEl){
+      // 合化成立：合化五行2pt・両干をmergedに
+      merged.add(i); merged.add(j);
+      el[gokaEl]+=2;
+    } else {
+      // 合化不成立（合去）：両干を0.5pt扱いに
+      halfKans.add(i); halfKans.add(j);
+    }
+  });
+
+  // 天干を加算（合化済み=スキップ、合去=0.5pt、通常=1pt）
+  kans.forEach((k,i)=>{
+    if(merged.has(i)) return; // 合化済みはスキップ
+    const pt = halfKans.has(i) ? 0.5 : 1;
+    el[KAN_EL_MAP[k]] += pt;
+  });
+
+  return el;
+}
+
+/* ══════════════════════════════════════
+   金運女神データ
+══════════════════════════════════════ */
+const GODDESSES = [
+  {
+    id:'ukemochi', name:'ウケモチ', type:'蓄積型',
+    theme:'コツコツ積み上げる豊かさ',
+    copy:'あなたの金運は「継続」から生まれます。大きなチャンスを待つより、今日の小さな積み上げが最も確実な富への道です。',
+    fukugyou:[
+      {rank:'1st',type:'ハンドメイド・制作',desc:'技術を磨くほど価値が上がる'},
+      {rank:'2nd',type:'コンテンツ積み上げ',desc:'ブログ・動画の資産が育つ'},
+      {rank:'3rd',type:'資格・スキル販売',desc:'専門性が直接収入になる'},
+    ],
+    el_affinity:{土:3,金:2,木:2,火:1,水:2},
+    q_affinity:[[0],[0],[0]], // Q1,Q2,Q3のマッチ回答インデックス
+  },
+  {
+    id:'ichikishima', name:'イチキシマヒメ', type:'流通型',
+    theme:'人の流れにのって富が来る',
+    copy:'あなたの金運は「縁」から流れてきます。自分から売り込むより、信頼を育てることで自然と豊かさが引き寄せられます。',
+    fukugyou:[
+      {rank:'1st',type:'コンサル・アドバイス',desc:'人との信頼が最大の資産'},
+      {rank:'2nd',type:'仲介・マッチング',desc:'繋ぐことで価値が生まれる'},
+      {rank:'3rd',type:'SNS発信・発信ビジネス',desc:'美的センスと人脈が活きる'},
+    ],
+    el_affinity:{金:3,水:3,木:1,火:2,土:1},
+    q_affinity:[[1],[1],[1]],
+  },
+  {
+    id:'toyouke', name:'トヨウケヒメ', type:'奉仕型',
+    theme:'与えることで循環する豊かさ',
+    copy:'あなたの金運は「貢献」から生まれます。誰かの役に立つことへの純粋な喜びが、最終的に最も大きな富を引き寄せます。',
+    fukugyou:[
+      {rank:'1st',type:'コーチング・カウンセリング',desc:'人を支える力が収入になる'},
+      {rank:'2nd',type:'教える・教育・講師',desc:'知識を渡すことで循環する'},
+      {rank:'3rd',type:'サポート・代行業',desc:'縁の下の力持ちが報われる'},
+    ],
+    el_affinity:{木:3,火:2,土:2,金:1,水:2},
+    q_affinity:[[2],[2],[2]],
+  },
+  {
+    id:'ogetsu', name:'オオゲツヒメ', type:'再生型',
+    theme:'手放した先に大きな実りが来る',
+    copy:'あなたの金運は「変容」から生まれます。今の状況を手放す勇気が、次の大きな豊かさへの扉を開きます。',
+    fukugyou:[
+      {rank:'1st',type:'転換・新分野チャレンジ',desc:'変化への勇気が財産になる'},
+      {rank:'2nd',type:'体験・ストーリー発信',desc:'失敗談・再生譚に価値がある'},
+      {rank:'3rd',type:'スピリチュアル・癒し',desc:'深みと共感力が武器になる'},
+    ],
+    el_affinity:{火:3,水:3,木:2,土:1,金:1},
+    q_affinity:[[3],[3],[3]],
+  },
+  {
+    id:'seoritsu', name:'セオリツヒメ', type:'浄化型',
+    theme:'流れを整えることで富が動く',
+    copy:'あなたの金運は「整理と浄化」から始まります。お金の流れを詰まらせているものを手放すことで、豊かさが動き出します。',
+    fukugyou:[
+      {rank:'1st',type:'整理・片付けコンサル',desc:'整える力が価値になる'},
+      {rank:'2nd',type:'断捨離・ミニマリスト発信',desc:'軽さのノウハウが刺さる'},
+      {rank:'3rd',type:'風水・空間デザイン',desc:'見えない流れを整える専門性'},
+    ],
+    el_affinity:{金:3,水:4,土:2,木:1,火:1},
+    q_affinity:[[4],[4],[4]],
+  },
+];
+
+/* 年柱・月柱別の才能・目標テキスト */
+const TALENT_TEXT = {
+  甲:'積極的に道を切り開く先駆者の才能。誰もやっていない分野に飛び込む勇気が最大の武器です。',
+  乙:'柔軟に環境に適応しながら着実に成長する才能。人の縁を丁寧に育てることで道が開きます。',
+  丙:'人を明るく照らし、場の中心に立つ才能。発信・表現することで才能が最大限に輝きます。',
+  丁:'繊細な感性で本質を見抜く才能。一対一の深い関係性の中でこそ真価を発揮します。',
+  戊:'どっしりした安定感と包容力が才能。長期的な視野で積み上げることで大きな成果が生まれます。',
+  己:'細部まで丁寧に整える几帳面さが才能。管理・サポート・コンテンツ制作で力を発揮します。',
+  庚:'決断力と実行力が才能。困難も正面突破できる強さが、競争の激しい分野での武器になります。',
+  辛:'磨かれた審美眼と完成度へのこだわりが才能。品質の高さで差別化できる分野が適しています。',
+  壬:'広い視野と情報収集力が才能。時代の流れをいち早く読み、新しいビジネスに乗り換える力があります。',
+  癸:'深い洞察力と直感が才能。表面ではなく本質を見抜く力が、相談業・分析業で大きな価値を生みます。',
+};
+const GOAL_TEXT = {
+  子:'知識と情報を武器にした自由な働き方。在宅・フリーランス・オンライン系が理想の舞台です。',
+  丑:'地道な積み上げから生まれる揺るぎない基盤。焦らず5〜10年スパンで豊かさを構築することが理想です。',
+  寅:'先頭に立ってチームを率いる立場。事業を起こし、人を動かすことが理想のゴールです。',
+  卯:'人を癒し、育てる役割。コーチ・講師・カウンセラーとして活躍することが理想の成功像です。',
+  辰:'大きな仕事を動かす縁の要になること。多くの人を繋ぐハブ的な存在が理想のポジションです。',
+  巳:'専門的な知識と技術で高い報酬を得ること。資格・スキルを磨いて専門家として確立することが理想です。',
+  午:'注目を集め、ファンに支えられる存在になること。発信・ブランド構築が理想への道です。',
+  未:'人の心に寄り添い、感謝をもらい続けること。継続的なサポートビジネスが理想の形です。',
+  申:'スピードと効率で結果を出すこと。ITツール・自動化・副業の仕組み化が理想のゴールです。',
+  酉:'高品質・高単価で少数の顧客に深く貢献すること。プレミアムなサービスが理想の成功像です。',
+  戌:'信頼と誠実さで選ばれ続けること。長期的な関係性から生まれる安定収入が理想の形です。',
+  亥:'柔軟に変化しながら複数の収入源を持つこと。ポートフォリオ型の働き方が理想のゴールです。',
+};
+
+/* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+let S = {
+  pillars: null,
+  q1: -1, q2: -1, q3: -1,
+};
+
+/* ══════════════════════════════════════
+   SCREEN
+══════════════════════════════════════ */
+function go(name){
+  ['top','birth','questions','result'].forEach(s=>{
+    const el=document.getElementById('s-'+s);
+    if(el) el.style.display='none';
+  });
+  const t=document.getElementById('s-'+name);
+  if(t){t.style.display='block';t.scrollIntoView({behavior:'smooth',block:'start'});}
+}
+
+/* ══════════════════════════════════════
+   BIRTH CHANGE（リアルタイムプレビュー）
+══════════════════════════════════════ */
+function onBirthChange(){
+  const dv=document.getElementById('f-date').value;
+  if(!dv) return;
+  const tv=document.getElementById('f-time').value||'12:00';
+  const lon=parseFloat(document.getElementById('f-pref').value);
+  const p = calcPillars(dv, tv, lon);
+  S.pillars = p;
+
+  const cols=['y','m','d','h'];
+  const ps=[p.year,p.month,p.day,p.hour];
+  cols.forEach((c,i)=>{
+    document.getElementById('pv-'+c+'-kan').textContent=ps[i].kan;
+    document.getElementById('pv-'+c+'-shi').textContent=ps[i].shi;
+    const el=document.getElementById('pv-'+c+'-el');
+    el.textContent=ps[i].elK;
+    el.style.color=EL_COLOR[ps[i].elK]||'#666';
+  });
+  document.getElementById('pillars-preview').classList.add('show');
+}
+
+/* ══════════════════════════════════════
+   EMO SELECT
+══════════════════════════════════════ */
+function selectEmo(label, group, val){
+  document.querySelectorAll('#'+group+' .emo-btn').forEach(b=>b.classList.remove('selected'));
+  label.classList.add('selected');
+  S[group] = val;
+}
+
+/* ══════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════ */
+function goBirth(){
+  if(!document.getElementById('f-date').value){
+    document.getElementById('err-birth').classList.add('on'); return;
+  }
+  document.getElementById('err-birth').classList.remove('on');
+  onBirthChange();
+  // 質問画面に女神プレビューを表示
+  if(S.pillars){
+    const nisshu = S.pillars.day.kan;
+    const gIdx = NISSHU_GODDESS[nisshu] ?? 0;
+    const g = GODDESSES[gIdx];
+    document.getElementById('q-goddess-preview').textContent =
+      '日主「'+nisshu+'」から導かれる金運女神：'+g.name+'（'+g.type+'）─ '+g.theme;
+  }
+  go('questions');
+}
+
+function goResult(){
+  if(S.q1<0||S.q2<0||S.q3<0){
+    document.getElementById('err-q').classList.add('on'); return;
+  }
+  document.getElementById('err-q').classList.remove('on');
+  renderResult();
+  go('result');
+}
+
+/* ══════════════════════════════════════
+   RENDER RESULT
+══════════════════════════════════════ */
+function renderResult(){
+  const p = S.pillars;
+
+  // 日主（日柱天干）で女神を決定
+  const nisshu = p ? p.day.kan : '甲';
+  const bestIdx = NISSHU_GODDESS[nisshu] ?? 0;
+  const g = GODDESSES[bestIdx];
+
+  // 現在状態アドバイス（Q1の回答から）
+  const stateAdvice = STATE_ADVICE[S.q1] || '';
+
+  // 副業不安から追加アドバイス
+  const fukugyouAdvice = [
+    '「続けられるか」という不安は、始めてみれば自然に消えていきます。最初の1ヶ月だけ決めてやってみてください。',
+    '方向がわからない時は、まず「好き・得意・求められる」の重なりを書き出すことから始めましょう。',
+    '副業は最初から公開しなくていい。まず身近な一人の役に立つことから始めれば、自然と広がります。',
+    '失敗リスクを最小化するなら、初期投資ゼロの副業から始めることをおすすめします。スキルを売ることが最も安全です。',
+    '時間がない人こそ、隙間時間で完結する副業が向いています。まず週2時間から設計しましょう。',
+  ][S.q2] || '';
+
+  // Hero
+  document.getElementById('r-type').textContent = g.type+' ─ '+g.name+'タイプ（日主：'+nisshu+'）';
+  document.getElementById('r-name').textContent = g.name;
+  document.getElementById('r-theme').textContent = g.theme;
+  document.getElementById('r-copy').textContent = g.copy;
+
+  // 現在状態アドバイス
+  document.getElementById('r-state-title').textContent = '日主「'+nisshu+'」が示す金運タイプ：'+g.type;
+  document.getElementById('r-state-advice').textContent = stateAdvice;
+  document.getElementById('r-fuku-advice').textContent = fukugyouAdvice;
+
+  // 四柱
+  const labels=['年柱','月柱','日柱','時柱'];
+  const ps = p ? [p.year,p.month,p.day,p.hour] : [];
+  document.getElementById('r-shicyu').innerHTML = ps.map((pi,i)=>`
+    <div class="sc-box">
+      <div class="sc-label">${labels[i]}</div>
+      <div class="sc-kan">${pi.kan}</div>
+      <div class="sc-shi">${pi.shi}</div>
+      <div class="sc-el" style="color:${EL_COLOR[pi.elK]||'#666'}">${pi.elK}</div>
+    </div>`).join('');
+
+  // 年柱才能
+  const yKan = p ? p.year.kan : '甲';
+  document.getElementById('r-talent-title').textContent = '「'+yKan+'」の天干が示す才能';
+  document.getElementById('r-talent').textContent = TALENT_TEXT[yKan] || '';
+
+  // 月柱目標
+  const mShi = p ? p.month.shi : '子';
+  document.getElementById('r-goal-title').textContent = '「'+mShi+'」の地支が示す成功の姿';
+  document.getElementById('r-goal').textContent = GOAL_TEXT[mShi] || '';
+
+  // 五行バランス
+  if(p){
+    const gogyou = calcGogyou(p);
+    const total = Object.values(gogyou).reduce((a,b)=>a+b,0);
+    const elOrder = ['木','火','土','金','水'];
+    const elColorMap = {木:'#2d5a3d',火:'#8b2020',土:'#7a5a20',金:'#b8860b',水:'#1a3a5c'};
+    const elBgMap = {木:'#e8f4ec',火:'#f4e8e8',土:'#f4f0e0',金:'#f8f0d8',水:'#e8eef4'};
+    document.getElementById('r-gogyou-bars').innerHTML = elOrder.map(el=>{
+      const cnt = gogyou[el]||0;
+      const pct = total>0 ? (cnt/total*100).toFixed(1) : 0;
+      const bar = '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">'
+        +'<div style="width:24px;text-align:center;font-size:16px;color:'+elColorMap[el]+'">'+el+'</div>'
+        +'<div style="flex:1;height:14px;background:#f0ead8;overflow:hidden;">'
+        +'<div style="height:100%;width:'+pct+'%;background:'+elColorMap[el]+';transition:width 0.8s ease;"></div>'
+        +'</div>'
+        +'<div style="font-size:12px;color:'+elColorMap[el]+';min-width:48px;">'+cnt+'pt ('+pct+'%)</div>'
+        +'</div>';
+      return bar;
+    }).join('');
+    // 最多・最少五行コメント
+    const sorted = elOrder.slice().sort((a,b)=>(gogyou[b]||0)-(gogyou[a]||0));
+    const strongest = sorted[0], weakest = sorted[sorted.length-1];
+    const elDesc = {
+      木:'成長・発展・対人関係の力が強い',火:'表現・情熱・人前に出る力が強い',
+      土:'安定・信頼・地道に積み上げる力が強い',金:'精錬・価値・決断・浄化の力が強い',
+      水:'知恵・直感・変容・流動の力が強い'
+    };
+    const elWeak = {
+      木:'成長・新しい挑戦の力を補う意識を',火:'表現・発信・人に見せる力を意識的に鍛えると◎',
+      土:'安定・継続・地道さを意識すると金運が安定',金:'決断力・整理整頓を意識すると流れが変わる',
+      水:'直感・情報収集・変化への柔軟性を意識して'
+    };
+    document.getElementById('r-gogyou-comment').textContent =
+      '最も強い五行「'+strongest+'」：'+elDesc[strongest]+'。'+
+      '弱い五行「'+weakest+'」：'+elWeak[weakest]+'。';
+  }
+
+  // 副業TOP3
+  document.getElementById('r-fukugyou').innerHTML = g.fukugyou.map(f=>`
+    <div class="fg-box">
+      <div class="fg-rank">${f.rank}</div>
+      <div class="fg-type">${f.type}</div>
+      <div class="fg-desc">${f.desc}</div>
+    </div>`).join('');
+}
+
+/* ══════════════════════════════════════
+   STRIPE / RETAKE
+══════════════════════════════════════ */
+function goStripe(){
+  alert('Stripe決済リンクをここに設定してください。\n例：https://buy.stripe.com/xxxxxxxx');
+}
+
+function retake(){
+  S={pillars:null,q1:-1,q2:-1,q3:-1};
+  document.getElementById('f-date').value='';
+  document.getElementById('f-time').value='12:00';
+  document.getElementById('pillars-preview').classList.remove('show');
+  document.querySelectorAll('.emo-btn').forEach(b=>b.classList.remove('selected'));
+  go('top');
+}
+
+window.onload=()=>go('top');
+</script>
+</body>
+</html>
