@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金運女神診断 ─ 詳細レポート</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&family=Noto+Serif+JP:wght@300;400;500;700&family=Shippori+Mincho+B1:wght@400;500;700;800&display=swap');
+:root{
+  --washi:#faf6ee;--ink:#1a1408;
+  --gold:#b8860b;--gold2:#d4a017;--gold3:#f0c040;--gold-pale:#fdf3d0;
+  --red:#8b2020;--green:#2d5a3d;--blue:#1a3a5c;
+  --border:rgba(184,134,11,0.25);--border2:rgba(184,134,11,0.5);
+  --shadow:0 4px 24px rgba(184,134,11,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Serif JP',serif;background:var(--washi);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+.wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 20px 80px;}
+
+/* HEADER */
+.header{text-align:center;padding:48px 0 36px;}
+.header-label{font-family:'Zen Antique Soft',serif;font-size:11px;letter-spacing:0.5em;color:var(--gold);margin-bottom:12px;}
+.header-title{font-family:'Shippori Mincho B1',serif;font-size:clamp(22px,5vw,36px);font-weight:800;color:var(--ink);letter-spacing:0.1em;}
+.header-title span{color:var(--gold);}
+.header-sub{font-size:13px;color:#7a6a4a;margin-top:8px;letter-spacing:0.1em;}
+
+/* CARD */
+.card{background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);padding:28px 24px;margin-bottom:16px;box-shadow:var(--shadow);position:relative;}
+.card::before{content:'';position:absolute;top:5px;left:5px;right:5px;bottom:5px;border:1px solid var(--border);pointer-events:none;}
+@media(max-width:480px){.card{padding:20px 16px;}}
+.card-title{font-family:'Shippori Mincho B1',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:0.2em;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+
+/* SECTION */
+.section{margin-bottom:28px;}
+.sec-label{font-size:10px;letter-spacing:0.3em;color:var(--gold);margin-bottom:8px;}
+.sec-title{font-family:'Shippori Mincho B1',serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px;}
+.sec-body{font-size:14px;line-height:2.1;color:#3a2a0a;}
+
+/* 四柱 */
+.shicyu-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0;}
+.sc-box{border:1px solid var(--border);padding:10px 6px;text-align:center;background:var(--washi);}
+.sc-label{font-size:9px;color:var(--gold);letter-spacing:0.15em;margin-bottom:4px;}
+.sc-kan{font-family:'Zen Antique Soft',serif;font-size:20px;color:var(--ink);}
+.sc-shi{font-family:'Zen Antique Soft',serif;font-size:16px;color:#6b5a3a;margin-top:2px;}
+.sc-el{font-size:9px;margin-top:3px;font-weight:500;}
+
+/* 五行バー */
+.el-bar-wrap{margin:8px 0;}
+
+/* フェーズ */
+.phase-box{padding:16px 18px;margin-bottom:10px;border-left:3px solid var(--gold);}
+.phase-box.p1{border-left-color:var(--green);background:rgba(45,90,61,0.03);}
+.phase-box.p2{border-left-color:var(--blue);background:rgba(26,58,92,0.03);}
+.phase-box.p3{border-left-color:var(--gold);background:var(--gold-pale);}
+.phase-label{font-size:10px;letter-spacing:0.25em;margin-bottom:6px;font-weight:700;}
+.phase-title{font-family:'Shippori Mincho B1',serif;font-size:15px;font-weight:700;margin-bottom:8px;}
+.phase-body{font-size:13px;line-height:2;color:#3a2a0a;}
+.phase-items{list-style:none;margin-top:8px;}
+.phase-items li{font-size:13px;padding:3px 0 3px 16px;position:relative;color:#1a2a1a;line-height:1.8;}
+.phase-items li::before{content:'✦';position:absolute;left:0;font-size:10px;color:var(--green);}
+.pitfall{font-size:12px;color:var(--red);margin-top:8px;padding-left:12px;border-left:2px solid var(--red);}
+
+/* 手紙 */
+.letter-box{background:#fffdf5;border:1px solid var(--border2);padding:24px 20px;margin:8px 0;position:relative;}
+.letter-box::before,.letter-box::after{content:'';display:block;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.letter-box::before{margin-bottom:16px;}
+.letter-box::after{margin-top:16px;}
+.letter-call{font-family:'Shippori Mincho B1',serif;font-size:16px;font-weight:700;color:#3a1a08;margin-bottom:16px;line-height:1.7;}
+.letter-main{font-size:14px;line-height:2.2;color:#2a1808;margin-bottom:16px;}
+.letter-truth{font-size:13px;color:#5a4a28;font-style:italic;margin-bottom:16px;padding:10px 14px;border-left:2px solid var(--gold);background:var(--gold-pale);}
+.letter-question{font-size:14px;color:var(--gold);font-style:italic;margin-bottom:12px;}
+.letter-closing{font-family:'Shippori Mincho B1',serif;font-size:15px;font-weight:700;color:#3a1a08;text-align:center;}
+
+/* アクション */
+.action-box{background:var(--gold-pale);border:1px solid var(--border2);border-left:4px solid var(--gold);padding:16px 18px;margin:12px 0;}
+.action-label{font-size:10px;letter-spacing:0.3em;color:var(--gold);margin-bottom:6px;font-weight:700;}
+.action-body{font-size:14px;line-height:1.9;color:var(--ink);}
+
+/* NGボックス */
+.ng-box{background:#fff8f8;border-left:4px solid var(--red);padding:12px 16px;margin:8px 0;font-size:13px;color:#5a1a1a;line-height:1.8;}
+.ng-label{font-size:10px;letter-spacing:0.2em;color:var(--red);font-weight:700;margin-bottom:4px;}
+
+/* 開運アクション */
+.kaun-item{padding:12px 0;border-bottom:1px solid var(--border);}
+.kaun-item:last-child{border-bottom:none;}
+.kaun-num{font-size:10px;letter-spacing:0.2em;color:var(--gold);margin-bottom:4px;}
+.kaun-title{font-family:'Shippori Mincho B1',serif;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.kaun-detail{font-size:13px;line-height:1.8;color:#3a2a0a;}
+.kaun-meta{font-size:11px;color:#9a8a6a;margin-top:6px;font-style:italic;}
+
+/* ローディング */
+.loading{text-align:center;padding:80px 20px;}
+.loading-spin{width:48px;height:48px;border:2px solid var(--border);border-top:2px solid var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Zen Antique Soft',serif;font-size:14px;color:var(--gold);letter-spacing:0.3em;}
+
+/* エラー */
+.error-page{text-align:center;padding:80px 20px;}
+.error-title{font-family:'Shippori Mincho B1',serif;font-size:20px;color:var(--red);margin-bottom:16px;}
+.error-body{font-size:14px;color:#7a6a4a;line-height:2;margin-bottom:24px;}
+.btn-back{display:inline-block;padding:12px 32px;background:var(--gold);color:#fff;font-family:'Shippori Mincho B1',serif;font-size:14px;letter-spacing:0.2em;cursor:pointer;border:none;text-decoration:none;}
+
+/* 区切り */
+.divider{text-align:center;margin:24px 0;font-size:14px;color:var(--gold);letter-spacing:0.3em;}
+
+footer{text-align:center;padding:40px 0 20px;font-size:11px;color:#9a8a6a;letter-spacing:0.2em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="header">
+  <div class="header-label">PREMIUM REPORT</div>
+  <h1 class="header-title">金運女神<span>詳細レポート</span></h1>
+  <p class="header-sub">ご購入ありがとうございます</p>
+</header>
+
+<div id="loading" class="loading">
+  <div class="loading-spin"></div>
+  <div class="loading-text">命式を読み込んでいます…</div>
+</div>
+
+<div id="content" style="display:none;"></div>
+
+<div id="error-page" class="error-page" style="display:none;">
+  <div class="error-title">命式情報が見つかりません</div>
+  <div class="error-body">
+    診断ページから再度お試しください。<br>
+    問題が解決しない場合はお問い合わせください。
+  </div>
+  <a href="index.html" class="btn-back">診断ページへ戻る</a>
+</div>
+
+<footer>— 金運女神診断 · Japanese Goddess Fortune Reading —</footer>
+</div>
+
+<script>
+/* ══════════════════════════════════════
+   DATA（index.htmlと同じものを内蔵）
+══════════════════════════════════════ */
+const KAN=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const SHI=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const EL_COLOR={木:'#2d5a3d',火:'#8b2020',土:'#7a5a20',金:'#b8860b',水:'#1a3a5c'};
+const KAN_EL_MAP={甲:'木',乙:'木',丙:'火',丁:'火',戊:'土',己:'土',庚:'金',辛:'金',壬:'水',癸:'水'};
+const SHI_EL_MAP={子:'水',丑:'土',寅:'木',卯:'木',辰:'土',巳:'火',午:'火',未:'土',申:'金',酉:'金',戌:'土',亥:'水'};
+
+const GODDESSES=['ウケモチ','イチキシマヒメ','トヨウケヒメ','オオゲツヒメ','セオリツヒメ'];
+const GODDESS_TYPE=['蓄積型','流通型','奉仕型','再生型','浄化型'];
+
+/* ── P2：日主テキスト ── */
+const TALENT_TEXT={
+  甲:'積極的に道を切り開く先駆者の才能。誰もやっていない分野に飛び込む勇気が最大の武器です。稼ぎ方のスタイルは「先駆者型」。すでにある市場で戦うより、あなた独自の切り口で全く新しいものを生み出す力があります。',
+  乙:'柔軟に環境に適応しながら着実に成長する才能。人の縁を丁寧に育てることで道が開きます。稼ぎ方のスタイルは「蔓型」。縁を資産にして、自然と豊かさが流れ込む構造を作ることができます。',
+  丙:'人を明るく照らし、場の中心に立つ才能。発信・表現することで才能が最大限に輝きます。稼ぎ方のスタイルは「発信・表現型」。SNS・動画・ライブなど自分を見せる場が最大の金運スポットです。',
+  丁:'繊細な感性で本質を見抜く才能。一対一の深い関係性の中でこそ真価を発揮します。稼ぎ方のスタイルは「灯火型・深耕型」。少数の人を深く満足させることが最大の金運戦略です。',
+  戊:'どっしりした安定感と包容力が才能。長期的な視野で積み上げることで大きな成果が生まれます。稼ぎ方のスタイルは「包容・基盤構築型」。人が集まる「場」を作ることで収益が生まれます。',
+  己:'細部まで丁寧に整える几帳面さが才能。管理・サポート・コンテンツ制作で力を発揮します。稼ぎ方のスタイルは「田畑型・丁寧蓄積型」。毎日少しずつ積み上げることで他の人が追いつけない資産が生まれます。',
+  庚:'決断力と実行力が才能。困難も正面突破できる強さが差別化ポイントです。稼ぎ方のスタイルは「刀型・突破型」。迷いなく決断し、すぐに動くことで金運が開きます。',
+  辛:'磨かれた審美眼と完成度へのこだわりが才能。品質の高さで差別化できる分野が向いています。稼ぎ方のスタイルは「宝石型・高品質特化型」。安売りは金運を下げます。高品質・少量・高単価が最大の戦略です。',
+  壬:'広い視野と情報収集力が才能。時代の流れをいち早く読む力があります。稼ぎ方のスタイルは「大河型・時流乗り型」。新しいプラットフォームや新しいトレンドに早く乗ることが有効です。',
+  癸:'深い洞察力と直感が才能。本質を見抜く力が相談業・分析業で大きな価値を生みます。稼ぎ方のスタイルは「雨露型・洞察型」。表には出ないが深いところで価値を生み出す仕事で本来の力が出ます。',
+};
+
+const TALENT_NG={
+  甲:'同じことを長期間続けること。変化と挑戦を意識的に取り入れてください。',
+  乙:'孤独に一人でやろうとすること。誰かと組んだ途端に結果が変わるのが乙の特徴です。',
+  丙:'裏方に徹すること。見えない場所で働いていると、丙の金運は半分以下になります。',
+  丁:'大勢に向けた大量発信を無理に続けること。深く狭くに集中してください。',
+  戊:'短期間で結果を求めて焦ること。3年で本物を築く視点を持ってください。',
+  己:'大きく目立とうとすること。地味に見える仕事ほど、己には向いています。',
+  庚:'優柔不断になること。「もう少し考えてから」が口癖になっている時は金運が止まっています。',
+  辛:'価格競争に参加すること。「もっと安くできますか」と言われた時こそ品質の価値を伝える勇気を。',
+  壬:'一つのことにこだわりすぎること。柔軟に方向を変える勇気が壬の最大の武器です。',
+  癸:'完璧な準備が整ったら動くを待っていると、永遠に動けません。60%の準備で動き始めることが鍵。',
+};
+
+const TALENT_ACTION={
+  甲:'今週中に「誰もやっていないと思うこと」を3つ書き出し、その中の一つを30日間だけ試す計画を立てる。',
+  乙:'今月、深く感謝を伝えたい人を3人選び、メッセージを送る。その縁を丁寧に温めることが乙の金運を動かします。',
+  丙:'今週、SNSかブログに「自分の意見を持った投稿」を1本書く。情報の転載ではなく、あなた自身の言葉で。',
+  丁:'今のあなたの周りで「もっと深く関わりたい」と感じる人を一人選び、その人が本当に困っていることを聞く。',
+  戊:'副業を選ぶ時に「5年後もやり続けられるか」を基準にする。続けるほど価値が上がるものを選ぶことが戊の金運を最大化します。',
+  己:'今週から「毎日5分だけ続けられること」を一つ決める。30日続いたものが、あなたの本当の武器です。',
+  庚:'今すぐ「やろうと思っていて後回しにしていること」を一つ選んで、今日中に最初の一歩だけ踏み出す。',
+  辛:'今月、今の副業・仕事の「見た目・パッケージ・説明文」を一つだけ改善する。品質への投資が辛の金運を動かします。',
+  壬:'今週、自分の興味がある新しいテーマを一つ深掘りする。その情報が3〜6ヶ月後に副業の種になります。',
+  癸:'今週、「直感で気になっていたが行動していないこと」を一つ選んで動いてみる。',
+};
+
+/* ── P4：時柱タイミングテキスト ── */
+const TIMING_TEXT={
+  子:{catch:'静かに蓄えた力が、突然大きく開花する人',pattern:'あなたの開運リズムは「蓄積→爆発型」です。長い準備期間の後に、突然大きな転機が訪れます。「何も起きていない」と感じる時期こそ、地下で根が張られている時間です。副業では積み上げ型のビジネスが時間差で大きく花開きます。',action:'今月、「情報収集と計画」だけに集中する週を1週間作ってください。動かない時間を意図的に作ることが、子のタイミングを最大化します。'},
+  丑:{catch:'地道な積み上げが、揺るぎない豊かさになる人',pattern:'あなたの開運リズムは「牛歩確実型」です。急いで結果を出そうとすると失敗しやすく、じっくり取り組んだものほど大きな成果になります。3ヶ月・6ヶ月・1年と続けるほど信頼と収益が積み上がります。',action:'副業を選ぶ時に「1年続けたら何が得られるか」を書き出し、それが具体的にイメージできるものを選んでください。'},
+  寅:{catch:'決断の瞬間に動けば、一気に加速する人',pattern:'あなたの開運リズムは「虎の一撃型」です。チャンスが来た瞬間に躊躇せず飛び込む行動力が最大の金運エンジンです。「動きながら考える」スタイルが合っています。',action:'今週、「やろうと思って保留にしていること」リストを作り、その中で「今月中に動けるもの」を一つ選んで48時間以内に最初の一歩を踏み出す。'},
+  卯:{catch:'縁とタイミングが重なった瞬間に、自然と豊かさが流れ込む人',pattern:'あなたの開運リズムは「花開き型」です。強引に動くより、自然な縁とタイミングに乗ることで金運が大きく開きます。紹介・口コミ・コミュニティの中から仕事が生まれる流れが最も合っています。',action:'今月、「ご縁に感謝を伝えたい人」に連絡を取ってください。卯の金運は人との縁を温めることから動き始めます。'},
+  辰:{catch:'変化の波頭に立った時、最大の力が発揮される人',pattern:'あなたの開運リズムは「龍の昇天型」です。変化と転換期に最も力を発揮します。「安定した状況」より「動き始めた変化の中」にいる時こそ金運は最大化します。',action:'今の生活・仕事環境で「変えたいと思っているのに変えていないこと」を一つ書き出し、その変化を起こすための最初の一歩だけ今月中に踏み出してください。'},
+  巳:{catch:'深い専門性と知恵が、最大の資産になる人',pattern:'あなたの開運リズムは「蛇の脱皮型」です。深く学び、専門性を磨くことで金運が開きます。浅く広くより深く狭く。一つの分野を極めることで誰にも真似できない価値が生まれます。',action:'今月から「週1時間、一つのテーマを深掘りする時間」を作ってください。巳の金運は「深さ」を積み上げることで開きます。'},
+  午:{catch:'情熱と行動力が頂点に達した瞬間、金運が爆発する人',pattern:'あなたの開運リズムは「真夏の太陽型」です。情熱が最高潮に達した時、圧倒的なエネルギーで周囲を動かす力があります。「やる気がある時に一気にやる」スタイルが最も合っています。',action:'今月、「心から楽しいと感じる副業のテーマ」を3つ書き出してください。午の金運は「情熱があるかどうか」が最大の判断基準です。'},
+  未:{catch:'人の心に寄り添い、感謝が積み重なって豊かになる人',pattern:'あなたの開運リズムは「羊の群れ型・感謝蓄積型」です。人の感情に寄り添い、じっくりと信頼を積み上げることで金運が育ちます。月額・継続課金型のビジネスが最も合っています。',action:'今月、あなたのサービス・副業を「継続して使ってもらえる形」に変えられないかを考えてください。未の金運は長期的な関係性から生まれます。'},
+  申:{catch:'素早い判断と実行力で、チャンスを確実に掴む人',pattern:'あなたの開運リズムは「猿の素早さ型」です。情報収集・判断・実行のサイクルを速く回すことで金運が開きます。複数の収入源を同時に持つ力があります。',action:'今週、副業の作業時間を「自動化・仕組み化」できる部分を一つ見つけてください。申の金運は「効率」から生まれます。'},
+  酉:{catch:'品質とブランドを磨くことで、高い価値を生み出す人',pattern:'あなたの開運リズムは「秋の収穫型」です。品質を高め、ブランドを磨いた先に大きな収穫が訪れます。「安く大量に」ではなく「高品質・少量・高単価」が最大化するモデルです。',action:'今月、今の副業・仕事の「見た目・パッケージ・説明文」を一つだけ改善してください。品質への投資が酉の金運を動かします。'},
+  戌:{catch:'信頼と誠実さで選ばれ続け、長期的に豊かになる人',pattern:'あなたの開運リズムは「番犬型・信頼蓄積型」です。一度信頼関係を築いた相手との長期的な関係から安定した豊かさが生まれます。既存のお客様を大切にすることが金運を安定させます。',action:'今月、一番長く付き合っているお客様・仕事相手に連絡を取り、感謝を伝えてください。戌の金運は「長い縁」を大切にするところから育ちます。'},
+  亥:{catch:'自由な発想と柔軟な対応力で、時代の変化に乗り続ける人',pattern:'あなたの開運リズムは「冬の水型・自由流動型」です。一つの形に縛られず、状況に応じて柔軟に変化できることが最大の強みです。複数の収入源を組み合わせることで変化にも強い豊かさが生まれます。',action:'今月、「もし制約がなかったら試してみたい副業」を5つ書き出し、その中から一つ30日間だけやってみてください。'},
+};
+
+/* ── P5：ロードマップ ── */
+const ROADMAP={
+  0:{// ウケモチ
+    month1_theme:'「何を積み上げるか」を決めて、小さく始める',
+    month1_actions:['自分の「得意・好き・人に聞かれること」を各10個書き出す','副業テーマを1つに絞る','最小単位のサービスを1つ作る（完璧でなくていい）','身近な1人に無料で試してもらいフィードバックをもらう','月末に「続けられそうか」だけを確認する'],
+    month1_pitfall:'完璧なものを作ろうとして何も世に出せないこと。最初は60点で出すを徹底してください。',
+    month3:'副業に使う時間が習慣になっている。最初のお客様・読者が生まれている。継続していることが最大の成果。',
+    year1:'副業からの収益が安定して入るようになっている。月収3〜10万円程度。副業で得た信頼・スキル・人脈が次の展開への土台になっている。',
+    recommended:['ブログ・note積み上げ','ハンドメイド・制作販売','動画コンテンツ作成','資格・スキルを活かした単発サービス'],
+  },
+  1:{// イチキシマヒメ
+    month1_theme:'何者であるかを明確にし、発信を始める',
+    month1_actions:['SNSのプロフィールを「何ができる人か」が3秒でわかるように書き直す','週2〜3回、自分の専門に関する投稿を始める','既存のつながりに「こんなことを始めた」と10人に伝える','無料でサービスを1つ提供し感想をもらう','最初の縁からの反応を確認する'],
+    month1_pitfall:'完璧なブランディングを準備してから発信しようとすること。縁は動いている人に集まります。',
+    month3:'発信を見た人から問い合わせが来るようになっている。紹介・口コミからの依頼が1件以上発生している。',
+    year1:'新規集客をしなくても紹介が生まれている。月収5〜20万円程度。「あなたに頼みたい」という指名が増えている。',
+    recommended:['コンサル・アドバイス','SNS運用代行・発信ビジネス','仲介・マッチングサービス','コミュニティ主催'],
+  },
+  2:{// トヨウケヒメ
+    month1_theme:'「誰の役に立つか」を決める',
+    month1_actions:['「自分が助けたいと思う人」を一人具体的にイメージし困っていることを10個書く','解決できることを3つに絞る','最も困っていそうな問題を一つ選びサービスとして形にする','無料で一人のために全力でやってみる（モニター）','モニターからの感想をもとにサービスを改善する'],
+    month1_pitfall:'自分のスキルや資格をベースに考えること。「相手の困りごと」から始めるとうまくいきます。',
+    month3:'最初のお客様が2回・3回と戻ってきている。「また頼みたい」と言われた経験がある。',
+    year1:'複数のリピートのお客様がいる。月収3〜15万円程度。「この人しかいない」と言われる存在になっている。',
+    recommended:['コーチング・カウンセリング','教える・教育・講師業','サポート・代行業','悩み相談・問題解決サービス'],
+  },
+  3:{// オオゲツヒメ
+    month1_theme:'「手放し」から始める',
+    month1_actions:['「今の仕事・生活で本当は手放したいもの」を10個書き出す','過去の失敗・遠回りから得た知恵をリストアップする','その経験が役立つ「困っている人」を想像する','失敗談・再生物語をSNSか文章で一つ公開してみる','今月中にやめることを一つ決める'],
+    month1_pitfall:'過去の失敗を恥ずかしいと思って隠すこと。オオゲツヒメの価値は「傷跡」にあります。',
+    month3:'過去の経験を活かしたサービス・発信が形になっている。同じ経験を持つ人からの共感・問い合わせが来ている。',
+    year1:'過去の経験が専門性として認められている。月収5〜30万円程度。変容し続けることで唯一無二の存在になっている。',
+    recommended:['体験・ストーリー発信','電子書籍・教材販売','スピリチュアル・癒し系サービス','コミュニティ主催・転換支援'],
+  },
+  4:{// セオリツヒメ
+    month1_theme:'自分のお金・時間・環境の「漏れ」をふさぐ',
+    month1_actions:['今月の支出を全て書き出し不要なものを3つ解約・削減する','時間の使い方を一週間記録し無駄になっている時間を特定する','家・仕事場の不要なものを捨てる・整理する','自分が「整理・片付け・浄化」で役立てる人を一人思い浮かべ声をかける','副業テーマとして「整える・流す・清める」に関わる分野を3つリストアップする'],
+    month1_pitfall:'まず自分以外の人を整えようとすること。「自分が整っている状態」からでないと力が発揮できません。',
+    month3:'自分の生活・環境が明らかに整っている。「どうやって整えたか」を人に教えられるようになっている。',
+    year1:'「整える・手放す・流す」に関するサービス・発信が確立している。月収3〜15万円程度。',
+    recommended:['整理収納・片付けコンサル','ミニマリスト・断捨離発信','風水・空間デザイン','家計管理・お金の流れコンサル'],
+  },
+};
+
+/* ── P6：今月の開運アクション（季節判定） ── */
+function getSeason(){
+  const m = new Date().getMonth()+1;
+  if(m>=3&&m<=5) return '春';
+  if(m>=6&&m<=8) return '夏';
+  if(m>=9&&m<=11) return '秋';
+  return '冬';
+}
+const KAUN_DATA={
+  'ウケモチ_春':{theme:'種を蒔く季節',actions:[{title:'副業の種を蒔く',detail:'今月中に「副業で提供したいサービス・商品」の最小版を一つ作って、一人に試してもらう。'},{title:'土台の棚卸し',detail:'自分のスキル・知識・経験を全て書き出し、副業に使えるものに印をつける。'},{title:'発芽を助ける環境を作る',detail:'副業専用のノート・フォルダ・時間（週2時間）を確保し、習慣として定着させる。'}],color:'モスグリーン × テラコッタ',spot:'公園・畑・自然の多い場所'},
+  'ウケモチ_夏':{theme:'育てる季節',actions:[{title:'継続の仕組みを強化する',detail:'副業の作業を毎日5分でも続ける記録をつける。「続いている事実」が最大の資産。'},{title:'最初のフィードバックを集める',detail:'今提供しているサービスについて、3人にリアルな感想を聞く。'},{title:'夏の浪費を防ぐ',detail:'衝動的な出費を月3つ記録し、月末に振り返る。'}],color:'モスグリーン × ゴールド',spot:'図書館・勉強カフェ'},
+  'ウケモチ_秋':{theme:'収穫の季節',actions:[{title:'価格の見直し',detail:'今のサービス・商品の価格が適正か確認し、必要なら値上げを検討する。'},{title:'実績・事例をまとめる',detail:'これまでの副業の成果・お客様の声を一つのページにまとめる。'},{title:'感謝を伝える',detail:'これまで関わってくれた人・お客様に感謝を伝えなさい。'}],color:'テラコッタ × ゴールド',spot:'神社・稲荷・豊穣の神様を祀る場所'},
+  'ウケモチ_冬':{theme:'蓄える季節',actions:[{title:'年次振り返りと来年の計画',detail:'今年の副業の成果・学び・反省を書き出し、来年やること・やめることを決める。'},{title:'スキルアップ投資',detail:'来年の副業に必要な資格・スキルを一つ選んで学習を開始する。'},{title:'財務の整理',detail:'今年の副業収益・支出を集計し、確定申告の準備を進める。'}],color:'モスグリーン × ブラウン',spot:'温かい場所・自宅・図書館'},
+  'イチキシマヒメ_春':{theme:'縁が芽吹く季節',actions:[{title:'新しい縁を作る',detail:'今月、異業種交流会・オンラインコミュニティ・セミナーに1回以上参加する。'},{title:'SNSのプロフィール更新',detail:'春に合わせてSNSプロフィールを刷新し、今のあなたを正確に伝える。'},{title:'眠っている縁を温める',detail:'しばらく連絡していない人に3人、近況報告のメッセージを送る。'}],color:'アクアマリン × ゴールド',spot:'海・川・水辺・神社（特に弁財天）'},
+  'イチキシマヒメ_夏':{theme:'縁が流れる季節',actions:[{title:'来た縁に乗る',detail:'今月、「面白そうだけど迷う」機会が来たら、とりあえず参加する。'},{title:'魅せ方の強化',detail:'SNS・ブログ・名刺など、自分を表現するツールを一つ磨き直す。'},{title:'感謝の循環',detail:'お世話になっている人に、小さな贈り物や感謝のメッセージを届ける。'}],color:'ターコイズブルー × シルバー',spot:'海・プール・水のある場所'},
+  'イチキシマヒメ_秋':{theme:'縁が実を結ぶ季節',actions:[{title:'紹介をお願いする',detail:'信頼できるお客様・知人に「副業を広めていただけませんか」と率直に伝える。'},{title:'コラボレーション',detail:'自分と違う分野の人と組んで、一つの企画・イベントをやってみる。'},{title:'縁の棚卸し',detail:'今年出会った人の中で、深めたい縁を3人選んで積極的にアプローチする。'}],color:'ゴールド × ターコイズ',spot:'美術館・洗練された場所・海沿い'},
+  'イチキシマヒメ_冬':{theme:'縁を深める季節',actions:[{title:'少数精鋭の深い関係',detail:'今月、本当に大切な人3人と1対1の時間を作る。'},{title:'来年の縁の設計',detail:'来年出会いたい人・参加したいコミュニティを具体的にリストアップする。'},{title:'自分のブランドを磨く',detail:'ポートフォリオ・プロフィール・実績ページを年末に刷新する。'}],color:'パールホワイト × シルバー',spot:'温泉・ゆったりした場所'},
+  'トヨウケヒメ_春':{theme:'奉仕の種を蒔く季節',actions:[{title:'一人のために全力で動く',detail:'今月、無料でもいいので一人の困りごとを解決するサービスを提供し、フィードバックをもらう。'},{title:'奉仕の軸を言語化する',detail:'「自分は誰の・何の役に立ちたいか」を一文で書く。'},{title:'感謝の受け取り練習',detail:'誰かに感謝された時、「ありがとうございます」と素直に受け取る練習をする。'}],color:'桜色 × ゴールド',spot:'神社・お寺・静かな場所'},
+  'トヨウケヒメ_夏':{theme:'奉仕を深める季節',actions:[{title:'リピートの仕組みを作る',detail:'今のサービスを「月額・継続型」に変えられないか検討し、1人にプロポーズしてみる。'},{title:'自分を満たす夏',detail:'副業と関係なく、自分が純粋に楽しいことを月1回する。'},{title:'お客様の声を集める',detail:'既存のお客様3人に感想・変化を聞き、サービス改善に活かす。'}],color:'桜色 × クリアホワイト',spot:'涼しい場所・公園・緑の多い場所'},
+  'トヨウケヒメ_秋':{theme:'奉仕が実を結ぶ季節',actions:[{title:'感謝の手紙を書く',detail:'お世話になっているお客様・仕事仲間3人に、手書きまたは丁寧なメッセージを送る。'},{title:'サービスの価値を上げる',detail:'今提供しているサービスに「プラスαの価値」を一つ追加し、お客様を驚かせる。'},{title:'紹介のお願い',detail:'信頼しているお客様に「ご縁のある方がいれば紹介していただけると嬉しいです」と伝える。'}],color:'深紅 × ゴールド',spot:'伊勢神宮（外宮）・食の神様を祀る神社'},
+  'トヨウケヒメ_冬':{theme:'奉仕を整える季節',actions:[{title:'奉仕の棚卸し',detail:'今年、誰の役に立てたかを振り返り、来年どんな人を助けたいかを具体的に書く。'},{title:'自分への奉仕',detail:'今月は「自分を大切にする」ことを最優先にする。十分に休み、栄養を取り、楽しむ。'},{title:'来年のサービス設計',detail:'来年提供したいサービスの内容・価格・提供方法を設計する。'}],color:'純白 × ゴールド',spot:'温かい場所・家・神社'},
+  'オオゲツヒメ_春':{theme:'再生の芽吹きの季節',actions:[{title:'再生の物語を発信する',detail:'今月、自分の「失敗から立ち直った経験」または「変化の物語」をSNSや文章で一つ発信する。'},{title:'新しい分野に踏み込む',detail:'気になっているが一歩踏み出せていた新しい副業ジャンルを今月試してみる。'},{title:'古いものを手放す',detail:'使っていないサービス・やめたいこと・ブロックしている思い込みを一つ手放す。'}],color:'アクアマリン × 深緑',spot:'新緑の多い場所・山・森'},
+  'オオゲツヒメ_夏':{theme:'変容の真っ只中の季節',actions:[{title:'一つ大きな変化を起こす',detail:'今月、「やろうと思っていたが怖くて踏み出せていなかったこと」を一つ実行する。'},{title:'経験を商品に変える',detail:'自分の「痛みを伴う経験・失敗談」をサービスや発信コンテンツに変える。'},{title:'夏の浄化',detail:'部屋の大掃除・不要な人間関係の整理・古い物の処分をして、空間を更新する。'}],color:'エメラルドグリーン × ゴールド',spot:'海・滝・水で清める場所'},
+  'オオゲツヒメ_秋':{theme:'再生の収穫の季節',actions:[{title:'経験の棚卸しと発信',detail:'今年経験したことをまとめて、来年の副業の核心として発信する。'},{title:'同じ道を歩む人を助ける',detail:'自分が乗り越えた経験を持つ人に向けて、無料相談・セッションを1回提供してみる。'},{title:'感謝と手放し',detail:'今年終わりにしたいこと・関係・習慣を一つ選んで、感謝して手放す。'}],color:'深紅 × ゴールド',spot:'神社・お墓参り・先祖を敬う場所'},
+  'オオゲツヒメ_冬':{theme:'次の再生を準備する季節',actions:[{title:'来年の「手放すこと」を決める',detail:'来年リセットしたいこと・終わらせたいことを3つ書き、その先に何を始めるかを書く。'},{title:'自分の再生物語をまとめる',detail:'今年の自分の変化・成長を「物語」として書き出す。'},{title:'静かな充電',detail:'冬は無理に動かなくていい。よく眠り・食べ・温まることが次の再生エネルギーになる。'}],color:'ディープネイビー × ゴールド',spot:'温泉・静かな場所・自然の中'},
+  'セオリツヒメ_春':{theme:'浄化と新しい流れの始まりの季節',actions:[{title:'春の大祓い（断捨離）',detail:'今月、部屋・財布・スマホの中の不要なものを全て整理する。'},{title:'お金の流れを整える',detail:'家計・副業収支を書き出し、「漏れているところ」を一つ特定してふさぐ。'},{title:'新しい流れを招く発信',detail:'今月から新しい副業テーマ・サービスの発信を始める。'}],color:'水色 × ゴールド',spot:'川・水辺・滝・祓いの神社'},
+  'セオリツヒメ_夏':{theme:'流れを加速させる季節',actions:[{title:'発信の流れを作る',detail:'週2〜3回、自分の専門テーマに関する投稿を続ける。流れは止めると詰まる。'},{title:'夏の浄化イベント参加',detail:'夏越の祓い（6月末）に神社でお参りする。'},{title:'新しい副業チャレンジ',detail:'今まで「やってみたかったけれどやっていない」副業を今月1つ試す。'}],color:'清流ブルー × シルバー',spot:'川・海・水辺・夏越の祓いの神社'},
+  'セオリツヒメ_秋':{theme:'流れを収穫する季節',actions:[{title:'収益の流れを確認する',detail:'今の副業収益の流れ（入口と出口）を図にして可視化し、改善点を一つ見つける。'},{title:'感謝と祓いの棚卸し',detail:'今年出会った縁・経験に感謝し、不要だったものへの後悔も「祓い」として流す。'},{title:'来年の流れの設計',detail:'来年のお金の流れ（収入目標・支出計画・副業目標）を大まかに設計する。'}],color:'深い水色 × ゴールド',spot:'川上・水源・清涼な場所'},
+  'セオリツヒメ_冬':{theme:'来年の流れを準備する季節',actions:[{title:'年末の大祓い',detail:'年末に部屋・財布・デジタルデータを全て整理し、来年の流れの入口を作る。'},{title:'今年の「漏れ」の総点検',detail:'今年のお金・時間・エネルギーの無駄遣いを振り返り、来年の対策を一つ決める。'},{title:'来年の「流れのテーマ」を決める',detail:'来年、どんなお金の流れを作りたいか・どんな縁を育てたいかを一文で書く。'}],color:'純白 × 水色',spot:'大祓い（12/31）の神社・水辺'},
+};
+
+/* ── P7：女神からの手紙 ── */
+const LETTERS={
+  '0_0':{call:'大地のように与え続けてきたあなたへ。',main:'ずっと頑張ってきた。それは本当のことです。あなたの努力は土の中で確かに根を張っています。ただ今は、まだ地上に出ていないだけ。報われていないのではなく、実を結ぶ直前の最も大切な時期にいます。大地は急かされても急ぎません。あなたもそれでいい。',truth:'あなたは「続けること」が誰よりも得意です。それは才能です。多くの人が諦めた先に、あなたはまだいます。',question:'今やっていることを、あと3ヶ月続けたとしたら、どんな景色が見えると思いますか？',closing:'大地は裏切らない。あなたの積み上げも、必ず実を結びます。'},
+  '0_1':{call:'動き出せない自分を責めているあなたへ。',main:'チャンスが見えているのに動けない。それは弱さではありません。ウケモチは豊かな土の神。土は踏み固められてから種を受け取ります。あなたの中で今、土台が作られています。「動けない」のではなく「まだ固まっていない」だけ。焦らなくていい。',truth:'あなたが感じている「チャンス」の直感は正しい。ただ、あなたには丁寧に準備する性質があります。それは欠点ではなく、長く続けるための知恵です。',question:'動き出せない本当の理由を、自分に正直に言えますか？',closing:'準備は終わっていなくていい。今日一つだけ、土を耕してください。'},
+  '0_2':{call:'自分を後回しにしすぎてきたあなたへ。',main:'与え続けてきた。それはあなたの本質から来る美しさです。でも今、あなた自身の土が乾いています。ウケモチは口から食物を生み出した神ですが、その命も有限でした。枯れる前に、まず自分を満たしてください。満たされた土からしか、本当に豊かな実りは生まれません。',truth:'あなたが誰かに与えてきたものの価値を、あなた自身だけが過小評価しています。',question:'最後に「自分のために」何かをしたのは、いつでしたか？',closing:'まず自分の畑に水を与えて。それがウケモチの本当の豊かさへの道です。'},
+  '0_3':{call:'手放す覚悟を持ったあなたへ。',main:'今の土地を耕し続けてきたけれど、もう限界かもしれない。そう感じているなら、それは正直な感覚です。ウケモチは死してなお五穀を生みました。手放すことは終わりではなく、次の豊かさの始まり。今耕してきたことは無駄ではありません。',truth:'あなたがリセットしたいと感じているのは、より大きな豊かさへの準備ができているからです。',question:'手放した後に手に入れたいものは、具体的に何ですか？',closing:'古い土を耕し直す勇気が、次の収穫を生みます。'},
+  '0_4':{call:'どこかで漏れていると感じているあなたへ。',main:'稼いでも気づけば減っている。その感覚は正しい。でもそれは土に穴が開いているのではなく、まだ水路が整っていないだけです。ウケモチの豊かさは「蓄える力」にあります。入口ではなく出口を整えることが、今のあなたに最も必要なことです。',truth:'あなたは「稼ぐ力」はすでに持っています。今必要なのは「守る仕組み」を作ることです。',question:'今月、一番無駄だと感じているお金の使い方は何ですか？',closing:'土の水路を整えれば、同じ雨でもずっと多くの実りが生まれます。'},
+  '1_0':{call:'見えない場所で輝き続けてきたあなたへ。',main:'頑張っているのに伝わっていない。それはあなたが美しい場所にいるのに、まだ光が届いていないだけです。イチキシマヒメは海峡を渡る人を守りましたが、その美しさは見た人の心を動かしました。あなたの力はすでにある。ただ、まだ見てもらっていないだけです。',truth:'あなたには「人を惹きつける力」が自然に備わっています。それを自分で信じていないことが唯一の課題です。',question:'今のあなたの仕事・副業を、一番大切な人に堂々と見せられますか？',closing:'海は輝くものを引き寄せます。あなたも、輝くことを恐れないでください。'},
+  '1_1':{call:'縁の扉の前で立ち止まっているあなたへ。',main:'チャンスが見えている。でも動けない。その理由は「まだ準備が足りない」からではありません。完璧な船を待つのではなく、今ある縁の流れに乗ることが、あなたの金運を動かします。最初の一歩は、完璧でなくていい。',truth:'あなたが「これだ」と感じているチャンスは、本物です。その直感を疑わないでください。',question:'今すぐ動くとしたら、最初にする一つのことは何ですか？',closing:'海流は待ってくれません。でも次の波は必ず来ます。今がその時です。'},
+  '1_2':{call:'美しさを誰かのためだけに使ってきたあなたへ。',main:'人のために動き続けてきた。その美しさは本物です。でも今、あなた自身の海が干上がりかけています。海が枯れれば、誰も守れない。あなたが満たされることは、わがままではありません。それは本来の力を取り戻すことです。',truth:'あなたが人のために使ってきた力は、本来もっと自分自身にも向けられるものです。',question:'自分のために輝いてもいいと、心から思えますか？',closing:'満ちた海だけが、船を運べます。まず自分を満たしてください。'},
+  '1_3':{call:'すべてを流し去る覚悟を持ったあなたへ。',main:'今の流れを手放したい。その感覚は、新しい海流が始まるサインです。古い流れが終わり、新しい流れが生まれる場所に立っています。手放すことは怖い。でも海は常に動いています。止まった水は腐る。あなたもまた、流れ続けることで輝きます。',truth:'あなたが「変わりたい」と感じているのは、すでに変わり始めているからです。',question:'新しい流れに乗るために、今手放せるものは何ですか？',closing:'古い海流を手放した先に、あなたを運ぶ新しい風が待っています。'},
+  '1_4':{call:'流れが詰まっていると感じているあなたへ。',main:'海峡が詰まっている。でもそれは、あなたの力がないのではなく、どこかで流れをブロックしているものがあるだけです。詰まりを取り除けば、自然と流れは戻ります。何が邪魔をしているか、静かに見つめてください。',truth:'あなたには本来、豊かな流れを呼び込む力があります。詰まりは一時的なものです。',question:'今のお金の流れで「なんとなく気になっている」ことは何ですか？',closing:'海峡の石を一つ取り除けば、水は自然と動き始めます。'},
+  '2_0':{call:'静かに支え続けてきたあなたへ。',main:'報われていない、と感じているかもしれません。でもトヨウケヒメは伊勢外宮で静かに人々を養い続けました。見えない場所で支えること、それがあなたの本質です。その貢献は確かに誰かの命を支えています。',truth:'あなたが提供してきた価値は、受け取った人の心に今も残っています。',question:'あなたが役に立てたと感じた瞬間を、今いくつ思い出せますか？',closing:'見えないところで世界を養うことが、あなたの使命です。その価値はあなたが思うより大きい。'},
+  '2_1':{call:'動きたいのに動けない優しいあなたへ。',main:'動き出せない理由は、誰かの役に立てるか確信が持てないからではないですか。トヨウケヒメは確信があったから動いたのではありません。「誰かの役に立ちたい」という気持ちがあれば、それが動く十分な理由です。',truth:'あなたには、相手が何を必要としているかを察する能力が備わっています。',question:'今、あなたの力を必要としている人は誰だと思いますか？',closing:'役に立つために完璧である必要はありません。今のあなたのままで、誰かを養えます。'},
+  '2_2':{call:'与えることに疲れたあなたへ。',main:'枯れそうになっています。今のあなたに必要なのは、受け取ることの練習です。誰かに助けを求めること。感謝を素直に受け取ること。それが奉仕型の金運を回復させます。',truth:'あなたが疲れているのは、弱いからではありません。与えすぎるほどの愛があるからです。',question:'今日、誰かに「助けてください」と言えますか？',closing:'空のカップからは何も注げません。まず自分のカップを満たしてください。'},
+  '2_3':{call:'新しい奉仕の形を探しているあなたへ。',main:'これまでの与え方をリセットしたい。その感覚は正しい変化のサインです。「誰かを養う」という本質は変わらなくても、方法は変えていい。あなたが今感じているリセットの衝動は、より深い奉仕への進化です。',truth:'あなたの「役に立ちたい」という気持ちは本物です。ただその表現方法が変わろうとしているだけです。',question:'新しい形の奉仕として、今一番やってみたいことは何ですか？',closing:'奉仕の本質は変わらない。ただ、その器を新しくする時が来ています。'},
+  '2_4':{call:'豊かさが循環していないと感じているあなたへ。',main:'与えているのに、循環していない。受け取ることも、循環の一部です。あなたが受け取りを拒んでいることが、循環を止めているかもしれません。',truth:'あなたが与えてきたものは、すでに循環の中に入っています。ただそれがあなたに返ってくるルートが詰まっているだけです。',question:'あなたが素直に受け取れていないものは何ですか？（感謝・お金・愛情・評価）',closing:'受け取ることは、循環を完成させることです。今日、素直に受け取ってください。'},
+  '3_0':{call:'何度も再生してきたあなたへ。',main:'頑張っても報われない、と感じているかもしれません。でもオオゲツヒメは死んでから五穀を生みました。今のあなたの努力は、まだ地面の下にあります。諦めないでください。再生の神の力を持つあなたは、一度終わってもまた始められます。',truth:'あなたが「報われない」と感じている経験の一つひとつが、後から振り返った時に全て意味を持ちます。',question:'過去の「失敗」の中で、今振り返ると価値があったと思えるものはありますか？',closing:'まだ芽が出ていないだけ。あなたの種は、確かに土の中にあります。'},
+  '3_1':{call:'変わりたいのに動けないあなたへ。',main:'「動けない」と感じる時、それは変容の直前です。蛹は飛ぶ前に最も動けなくなります。今のあなたはその状態です。もう少しだけ待ってください。',truth:'あなたが感じているチャンスへの引力は、再生の準備が整ったサインです。',question:'変化した後の自分を、具体的にイメージできますか？',closing:'動けない今が、変容の最中です。蛹はやがて飛びます。'},
+  '3_2':{call:'自分を犠牲にし続けてきたあなたへ。',main:'枯れるほど与えてきた。でも今のあなたに必要なのは、命を削ることではありません。生きながら豊かさを生み出すことです。あなたが生きていること自体が、すでに世界への贈り物です。',truth:'あなたは「与えなければ価値がない」という思い込みを手放す時期に来ています。',question:'自分が存在するだけで価値があると、心から思えますか？',closing:'死して五穀を生む必要はありません。生きながら豊かさを生み出してください。'},
+  '3_3':{call:'手放す覚悟が生まれたあなたへ。',main:'リセットしたい。その感覚は、オオゲツヒメの本質そのものです。今のあなたが感じている「終わらせたい」という衝動は、次の豊かさへの正確なナビゲーションです。怖くていい。でも進んでください。',truth:'あなたが手放そうとしているものは、すでに役割を終えています。',question:'手放した後に、どんな自分でいたいですか？',closing:'終わりを恐れないでください。あなたには何度でも生まれ直す力があります。'},
+  '3_4':{call:'流れが詰まったと感じているあなたへ。',main:'詰まりの奥に、何か「手放せていないもの」があるかもしれません。古い価値観・古い習慣・古い関係性。どれかを手放した瞬間、流れは動き始めます。',truth:'あなたが「なんとなく手放せない」と感じているものが、流れを止めている原因です。',question:'今のあなたの生活の中で、「もう手放してもいい」と感じているものは何ですか？',closing:'手放した先にしか、再生の豊かさは生まれません。'},
+  '4_0':{call:'清め続けてきたあなたへ。',main:'報われていない感覚の裏に、「受け取ることへの罪悪感」があるかもしれません。稼ぐことは、穢れではありません。流すべきものと、受け取るべきものを見分けてください。',truth:'あなたの「清める力」は本物です。ただ、清めすぎて自分の豊かさまで流してしまっています。',question:'お金を受け取ることに、どこか後ろめたさを感じることはありますか？',closing:'流すべきものと、留めるべきものがあります。豊かさは流さなくていい。'},
+  '4_1':{call:'整えてから動こうとしているあなたへ。',main:'完璧に整ってから動こうとしている。でもセオリツヒメは水が流れながら清めます。止まった水は清められません。動きながら整えていくことが、セオリツヒメの本来の力の使い方です。',truth:'あなたには「流れを作る力」があります。その力は、動いている時に発揮されます。',question:'「整ったら動く」を何回繰り返してきましたか？',closing:'水は流れながら清められます。動きながら整えていけばいい。'},
+  '4_2':{call:'場の淀みを引き受けすぎてきたあなたへ。',main:'あなたはずっと、場の穢れを自分で引き受けてきたのではないですか。浄化するとは、流すことであって、抱え込むことではありません。',truth:'あなたが枯れているのは、流すべき穢れを自分の中に溜め込んでしまっているからです。',question:'今のあなたの中に、誰かから引き受けた重さが残っていませんか？',closing:'流すことが、あなたの仕事です。抱え込まなくていい。'},
+  '4_3':{call:'古い流れをリセットしようとしているあなたへ。',main:'リセットしたい。その感覚は正確です。今あなたが感じているリセットの衝動は、祓いのエネルギーです。何を手放すかを明確にして、意識的に流してください。',truth:'あなたには「古いものを終わらせる」タイミングを正確に感じ取る感受性があります。',question:'今すぐ祓いたい（手放したい）ものを三つ、書き出せますか？',closing:'祓い清めた後の空白を恐れないでください。そこに新しい流れが生まれます。'},
+  '4_4':{call:'お金の流れが詰まっていると感じているあなたへ。',main:'川が詰まる原因は、必ずどこかにあります。収入ではなく支出かもしれません。まず「詰まりの場所」を特定することが最初の仕事です。',truth:'あなたには「詰まりの場所を見つける」直感が備わっています。その感覚を信じてください。',question:'今のお金の流れで「なんとなく気持ち悪い」と感じているところはどこですか？',closing:'詰まりを見つけた瞬間、流れは半分回復しています。'},
+};
+
+/* ══════════════════════════════════════
+   MAIN：命式パラメータを読み込んで描画
+══════════════════════════════════════ */
+window.onload = function(){
+  // localStorageから命式情報を取得
+  const raw = localStorage.getItem('kinun_params');
+  if(!raw){ showError(); return; }
+
+  let params;
+  try { params = new URLSearchParams(raw); } catch(e){ showError(); return; }
+
+  const yk=params.get('yk'), ys=params.get('ys');
+  const mk=params.get('mk'), ms=params.get('ms');
+  const dk=params.get('dk'), ds=params.get('ds');
+  const hk=params.get('hk'), hs=params.get('hs');
+  const gIdx=parseInt(params.get('g')||'0');
+  const q1=parseInt(params.get('q1')||'0');
+  const q2=parseInt(params.get('q2')||'0');
+  const strongest=params.get('st')||'土';
+  const weakest=params.get('sw')||'水';
+
+  if(!yk||!dk){ showError(); return; }
+
+  // 使用後にlocalStorageを削除（セキュリティ）
+  // localStorage.removeItem('kinun_params'); // ← 再読み込み対策でコメントアウト
+
+  const pillars=[
+    {label:'年柱',kan:yk,shi:ys,el:KAN_EL_MAP[yk]||''},
+    {label:'月柱',kan:mk,shi:ms,el:KAN_EL_MAP[mk]||''},
+    {label:'日柱',kan:dk,shi:ds,el:KAN_EL_MAP[dk]||''},
+    {label:'時柱',kan:hk,shi:hs,el:KAN_EL_MAP[hk]||''},
+  ];
+
+  document.getElementById('loading').style.display='none';
+  document.getElementById('content').style.display='block';
+  buildReport(pillars, gIdx, q1, q2, strongest, weakest);
+};
+
+function showError(){
+  document.getElementById('loading').style.display='none';
+  document.getElementById('error-page').style.display='block';
+}
+
+function el(tag,cls,text){
+  const e=document.createElement(tag);
+  if(cls) e.className=cls;
+  if(text!==undefined) e.textContent=text;
+  return e;
+}
+function div(cls,text){ return el('div',cls,text); }
+
+function buildReport(pillars, gIdx, q1, q2, strongest, weakest){
+  const wrap = document.getElementById('content');
+  const goddess = GODDESSES[gIdx]||'ウケモチ';
+  const type = GODDESS_TYPE[gIdx]||'蓄積型';
+  const nisshu = pillars[2].kan; // 日柱天干
+  const jishi = pillars[3].shi;  // 時柱地支
+  const season = getSeason();
+  const letterKey = gIdx+'_'+q1;
+  const letter = LETTERS[letterKey];
+  const roadmap = ROADMAP[gIdx];
+  const kaunKey = goddess+'_'+season;
+  const kaun = KAUN_DATA[kaunKey];
+
+  // ── 命式サマリー ──
+  const summaryCard = div('card');
+  summaryCard.appendChild(div('card-title','✦ あなたの命式サマリー'));
+  const shicyuRow = div('shicyu-row');
+  pillars.forEach(p=>{
+    const box=div('sc-box');
+    box.appendChild(div('sc-label',p.label));
+    box.appendChild(div('sc-kan',p.kan));
+    box.appendChild(div('sc-shi',p.shi));
+    const elDiv=div('sc-el',p.el);
+    elDiv.style.color=EL_COLOR[p.el]||'#666';
+    box.appendChild(elDiv);
+    shicyuRow.appendChild(box);
+  });
+  summaryCard.appendChild(shicyuRow);
+  const godSum=div('');
+  godSum.innerHTML='<div style="margin-top:16px;padding:14px 16px;background:var(--gold-pale);border-left:3px solid var(--gold);">'
+    +'<div style="font-size:11px;letter-spacing:0.2em;color:var(--gold);margin-bottom:6px;">日主「'+nisshu+'」から導かれる金運女神</div>'
+    +'<div style="font-family:\'Shippori Mincho B1\',serif;font-size:22px;font-weight:800;color:var(--gold);">'+goddess+'</div>'
+    +'<div style="font-size:13px;color:#7a6a4a;margin-top:4px;">'+type+'</div>'
+    +'</div>';
+  summaryCard.appendChild(godSum);
+  wrap.appendChild(summaryCard);
+
+  // ── P2：日主の稼ぎ方 ──
+  const p2Card = div('card');
+  p2Card.appendChild(div('card-title','P2｜日主「'+nisshu+'」から読む稼ぎ方の本質'));
+  const s1=div('section');
+  s1.appendChild(div('sec-label','稼ぎ方のスタイル'));
+  const talentBody=div('sec-body',TALENT_TEXT[nisshu]||'');
+  s1.appendChild(talentBody);
+  const ng=div('ng-box');
+  ng.appendChild(div('ng-label','やってはいけないこと'));
+  ng.appendChild(div('',TALENT_NG[nisshu]||''));
+  s1.appendChild(ng);
+  const ac=div('action-box');
+  ac.appendChild(div('action-label','今すぐできるアクション'));
+  ac.appendChild(div('action-body',TALENT_ACTION[nisshu]||''));
+  s1.appendChild(ac);
+  p2Card.appendChild(s1);
+  wrap.appendChild(p2Card);
+
+  // ── P4：時柱タイミング ──
+  const timing = TIMING_TEXT[jishi];
+  if(timing){
+    const p4Card=div('card');
+    p4Card.appendChild(div('card-title','P4｜時柱「'+jishi+'」から読む動くべきタイミング'));
+    const s4=div('section');
+    s4.appendChild(div('sec-label','開運の波のパターン'));
+    s4.appendChild(div('sec-title',timing.catch));
+    s4.appendChild(div('sec-body',timing.pattern));
+    const ac4=div('action-box');
+    ac4.appendChild(div('action-label','今すぐできるアクション'));
+    ac4.appendChild(div('action-body',timing.action));
+    s4.appendChild(ac4);
+    p4Card.appendChild(s4);
+    wrap.appendChild(p4Card);
+  }
+
+  // ── P5：ロードマップ ──
+  if(roadmap){
+    const p5Card=div('card');
+    p5Card.appendChild(div('card-title','P5｜'+goddess+'の副業ロードマップ'));
+    // PHASE1
+    const ph1=div('phase-box p1');
+    ph1.appendChild(div('phase-label','PHASE 1｜今月やること'));
+    ph1.appendChild(div('phase-title',roadmap.month1_theme));
+    const ul=document.createElement('ul');
+    ul.className='phase-items';
+    roadmap.month1_actions.forEach(a=>{ const li=document.createElement('li'); li.textContent=a; ul.appendChild(li); });
+    ph1.appendChild(ul);
+    ph1.appendChild(div('pitfall','⚠ '+roadmap.month1_pitfall));
+    p5Card.appendChild(ph1);
+    // PHASE2
+    const ph2=div('phase-box p2');
+    ph2.appendChild(div('phase-label','PHASE 2｜3ヶ月後の状態'));
+    ph2.appendChild(div('phase-body',roadmap.month3));
+    p5Card.appendChild(ph2);
+    // PHASE3
+    const ph3=div('phase-box p3');
+    ph3.appendChild(div('phase-label','PHASE 3｜1年後の姿'));
+    ph3.appendChild(div('phase-body',roadmap.year1));
+    p5Card.appendChild(ph3);
+    // おすすめ副業
+    const recDiv=div('');
+    recDiv.innerHTML='<div style="margin-top:16px;"><div style="font-size:11px;letter-spacing:0.2em;color:var(--gold);margin-bottom:8px;">おすすめ副業ジャンル</div>'
+      +roadmap.recommended.map(r=>'<span style="display:inline-block;margin:3px 4px;padding:4px 12px;background:var(--gold-pale);border:1px solid var(--border2);font-size:12px;color:var(--ink);">'+r+'</span>').join('')+'</div>';
+    p5Card.appendChild(recDiv);
+    wrap.appendChild(p5Card);
+  }
+
+  // ── P6：今月の開運アクション ──
+  if(kaun){
+    const p6Card=div('card');
+    p6Card.appendChild(div('card-title','P6｜今月の開運アクション（'+season+'）'));
+    p6Card.appendChild(div('sec-label',kaun.theme));
+    kaun.actions.forEach((a,i)=>{
+      const item=div('kaun-item');
+      item.appendChild(div('kaun-num','ACTION '+(i+1)));
+      item.appendChild(div('kaun-title',a.title));
+      item.appendChild(div('kaun-detail',a.detail));
+      item.appendChild(div('kaun-meta','開運カラー：'+kaun.color+' ｜ 開運スポット：'+kaun.spot));
+      p6Card.appendChild(item);
+    });
+    wrap.appendChild(p6Card);
+  }
+
+  // ── P7：女神からの手紙 ──
+  if(letter){
+    const p7Card=div('card');
+    p7Card.appendChild(div('card-title','P7｜女神からの手紙'));
+    const lb=div('letter-box');
+    lb.appendChild(div('letter-call',letter.call));
+    lb.appendChild(div('letter-main',letter.main));
+    lb.appendChild(div('letter-truth',letter.truth));
+    lb.appendChild(div('letter-question','✦ '+letter.question));
+    lb.appendChild(div('letter-closing',letter.closing));
+    p7Card.appendChild(lb);
+    wrap.appendChild(p7Card);
+  }
+}
+</script>
+</body>
+</html>
