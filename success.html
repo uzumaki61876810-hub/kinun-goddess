@@ -105,6 +105,18 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .divider{text-align:center;margin:24px 0;font-size:14px;color:var(--gold);letter-spacing:0.3em;}
 
 footer{text-align:center;padding:40px 0 20px;font-size:11px;color:#9a8a6a;letter-spacing:0.2em;}
+
+/* 診断履歴パネル */
+.hist-panel{background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow);}
+.hist-title{font-family:'Shippori Mincho B1',serif;font-size:14px;font-weight:700;color:var(--gold);letter-spacing:0.2em;margin-bottom:12px;}
+.hist-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);gap:10px;}
+.hist-item:last-child{border-bottom:none;}
+.hist-item:hover{background:var(--gold-pale);}
+.hist-info{flex:1;}
+.hist-date{font-size:11px;color:#9a8a6a;margin-bottom:2px;}
+.hist-name{font-size:13px;font-weight:500;color:var(--ink);}
+.hist-load{font-size:11px;color:var(--gold);letter-spacing:0.1em;padding:4px 10px;border:1px solid var(--gold);cursor:pointer;background:transparent;white-space:nowrap;}
+.hist-load:hover{background:var(--gold);color:#fff;}
 </style>
 </head>
 <body>
@@ -129,6 +141,11 @@ footer{text-align:center;padding:40px 0 20px;font-size:11px;color:#9a8a6a;letter
     問題が解決しない場合はお問い合わせください。
   </div>
   <a href="index.html" class="btn-back">診断ページへ戻る</a>
+</div>
+
+<div id="hist-panel" class="hist-panel" style="display:none;">
+  <div class="hist-title">▼ 過去の診断履歴から読み込む</div>
+  <div id="hist-list"></div>
 </div>
 
 <footer>— 金運女神診断 · Japanese Goddess Fortune Reading —</footer>
@@ -312,8 +329,16 @@ const LETTERS={
 ══════════════════════════════════════ */
 window.onload = function(){
   // localStorageから命式情報を取得
-  const raw = localStorage.getItem('kinun_params');
-  if(!raw){ showError(); return; }
+  let raw = localStorage.getItem('kinun_params');
+  if(!raw){
+    const hist = JSON.parse(localStorage.getItem('kinun_history')||'[]');
+    if(hist.length > 0){
+      raw = hist[0].params;
+    } else {
+      showError();
+      return;
+    }
+  }
 
   let params;
   try { params = new URLSearchParams(raw); } catch(e){ showError(); return; }
@@ -348,6 +373,32 @@ window.onload = function(){
 function showError(){
   document.getElementById('loading').style.display='none';
   document.getElementById('error-page').style.display='block';
+  loadHistory();
+}
+
+function loadHistory(){
+  var hist = JSON.parse(localStorage.getItem('kinun_history')||'[]');
+  if(hist.length === 0) return;
+  var panel = document.getElementById('hist-panel');
+  var list = document.getElementById('hist-list');
+  list.innerHTML = '';
+  hist.forEach(function(h){
+    var item = div('hist-item');
+    var info = div('hist-info');
+    var dateEl = div('hist-date', h.date);
+    var nameEl = div('hist-name', (h.goddess||'') + (h.nisshu ? '（'+h.nisshu+'）' : ''));
+    info.appendChild(dateEl);
+    info.appendChild(nameEl);
+    item.appendChild(info);
+    var btn = el('button','hist-load','この診断を表示');
+    btn.onclick = function(){
+      localStorage.setItem('kinun_params', h.params);
+      location.reload();
+    };
+    item.appendChild(btn);
+    list.appendChild(item);
+  });
+  panel.style.display = 'block';
 }
 
 function el(tag,cls,text){
