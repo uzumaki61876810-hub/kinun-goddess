@@ -349,8 +349,8 @@ footer{text-align:center;padding:40px 0 20px;font-size:11px;color:#9a8a6a;letter
       <li>副業ロードマップ（3ステップ）─ 今月・3ヶ月後・1年後</li>
       <li>女神からの手紙 ─ 今のあなただけへのメッセージ</li>
     </ul>
-    <button class="btn btn-stripe" onclick="goStripe()">✦ PDFレポートを購入する（¥1,480）</button>
-    <p style="font-size:11px;color:#a09070;margin-top:10px;">Stripeの安全な決済ページへ移動します</p>
+    <button class="btn btn-stripe" onclick="goReport()">✶ 詳細レポートを見る（無料）</button>
+    <p style="font-size:11px;color:#a09070;margin-top:10px;">完全無料です。広告が表示されます</p>
   </div>
   <div class="btn-row">
     <button class="btn btn-sub" onclick="retake()">再診断する</button>
@@ -858,8 +858,8 @@ function renderResult(){
 /* ══════════════════════════════════════
    STRIPE / RETAKE
 ══════════════════════════════════════ */
-function goStripe(){
-  window.location.href='https://buy.stripe.com/4gM3cw6FPeUQ2vS9ukd3i01';
+function goReport(){
+  window.location.href='success.html';
 }
 
 function retake(){
@@ -873,5 +873,13 @@ function retake(){
 
 window.onload=()=>go('top');
 </script>
+
+<!-- ======== Google AdSense ======== -->
+<!-- 広告を表示するには AdSense コードをここに貼り付けてください -->
+<div id="ad-bottom" style="text-align:center;padding:16px 0;background:rgba(0,0,0,0.04);">
+  <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins> -->
+  <!-- <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script> -->
+</div>
+<!-- ================================= -->
 </body>
 </html>
